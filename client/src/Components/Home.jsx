@@ -1,30 +1,42 @@
+import { motion } from "framer-motion";
 import axios from "axios";
-import React from "react";
+import Sidebar from "./Sidebar";
 import { Link, useNavigate } from "react-router-dom";
+import "../Styles/HomeContent.css";
+import React, { useState } from "react";
 
 const Home = () => {
-  const navigate = useNavigate();
-  axios.defaults.withCredentials = true;
-  const handleLogout = () => {
-    axios
-      .get("http://localhost:8093/auth/logout")
-      .then((res) => {
-        if (res.data.status) {
-          navigate("/login");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
+
   return (
-    <div>
-      Home
-      <button>
-        <Link to="/dashboard">DashBoard</Link>
-        <br />
-      </button>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="home-container">
+      {/* Pass isOpen state and toggle function to Sidebar */}
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+
+      <div className={`main-content ${isSidebarOpen ? "shifted" : ""}`}>
+        <header className="header">
+          <h1 className="home-heading">
+            Welcome to the Hostel Complaint Management System!
+          </h1>
+          <h2 className="second-heading">
+            Your comfort and satisfaction are our priorities.
+          </h2>
+          <div className="para">
+            <p>
+              Every concern matters: Together, we create a better living
+              environment.
+            </p>
+            <p>
+              Submit, Track, and Resolve: A seamless process for all complaints.
+            </p>
+            <p>Speak up! Your feedback drives our improvement.</p>
+          </div>
+        </header>
+      </div>
     </div>
   );
 };

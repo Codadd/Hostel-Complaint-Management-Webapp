@@ -1,0 +1,73 @@
+.sidecomp {
+    position: fixed;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #333;
+    color: white;
+    z-index: 100;
+  }
+.sidebar-header{
+    display: flex;
+    align-items: center;
+    background-color: rgb(165, 163, 207);
+    justify-content: space-between;
+    padding: 10px;
+}
+.toggle-btn{
+    cursor: pointer;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+.toggle-btn .arrow{
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+.toggle-btn .left{
+    border-width: 8px 10px 8px 0;
+    border-color: transparent white transparent transparent;
+}
+.toggle-btn .right{
+    border-width: 8px 0 8px 10px;
+    border-color: transparent transparent transparent white;
+}
+.sidecomp.closed{
+    width: 40px;
+}
+.logo{
+    text-align: center;
+}
+.logo h2{
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: 18;
+    color: azure;
+    margin: 0;
+}
+.nav-menu ul{
+    list-style-type: none;
+    padding: 0;
+}
+.nav-menu ul li{
+    padding: 15px 20px;
+}
+.nav-menu ul li a{
+    color: antiquewhite;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+.nav-menu ul li a:hover{
+    background-color: rgb(72, 84, 147);
+}
+.nav-menu ul button{
+    cursor: pointer;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
