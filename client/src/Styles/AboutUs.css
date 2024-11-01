@@ -1,0 +1,33 @@
+.init-para{
+    color: rgb(0, 0, 0);
+    font-size: x-large;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.heading{
+    color: bisque;
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.main-row{
+    display: flex;
+    flex-direction: column; /* Aligns items in a column */
+    align-items: center;    /* Optional: Centers items horizontally */
+    gap: 20px;              /* Optional: Adds space between items */
+    height: 20rem;          /* Optional: Full viewport height */
+    justify-content: center; /* Optional: Centers items vertically */
+
+}
+.div-icon{
+    display: flex;
+    color: aliceblue;  
+    justify-content: center;
+    gap: 20px;
+}
+.icon-col{
+    color: rgb(35, 31, 31);
+}
+.info-mation{
+    font-weight: 100;
+}

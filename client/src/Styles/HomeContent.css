@@ -23,20 +23,7 @@
     text-transform: uppercase; */
 
 }
-.home-heading::before{
-    /* content: attr(data-text); */
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    color: rgb(75, 52, 180);
-    /* -webkit-text-stroke: 0vw rgb(77, 91, 173); */
-    border-right: 2px solid rgb(130, 123, 203);
-    overflow: hidden;
-    /* animation: animate 6s linear infinite; */
-   
-}
+
 @keyframes animate
 {
     0% ,10% ,100%{
@@ -56,6 +43,7 @@
   }
 .second-heading{
     font-size: xx-large;
+    color: rgb(210, 179, 143);
 }
 .sidebar-open .main-content {
     margin-left: 250px; /* Adjust to match sidebar width when open */

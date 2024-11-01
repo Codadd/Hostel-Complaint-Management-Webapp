@@ -34,6 +34,7 @@ const Login = () => {
         <input
           placeholder="password"
           name="password"
+          autoComplete="off"
           onChange={(e) => setPassword(e.target.value)}
         />
         <button className="my-btn" type="submit">

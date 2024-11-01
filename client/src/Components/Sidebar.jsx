@@ -2,6 +2,7 @@ import React from "react";
 import "../Styles/Sidebar.css";
 import { motion } from "framer-motion";
 import { SidebarData } from "../Data/SidebarData";
+import RegisterComplaint from "../SideBarComponent.jsx/RegisterComplaint";
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {

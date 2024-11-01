@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import axios from "axios";
 import Sidebar from "./Sidebar";
+import RegisterComplaint from "../SideBarComponent.jsx/RegisterComplaint";
 import { Link, useNavigate } from "react-router-dom";
 import "../Styles/HomeContent.css";
 import React, { useState } from "react";
