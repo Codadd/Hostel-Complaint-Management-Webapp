@@ -1,11 +1,15 @@
-// RegisterComplaint.jsx
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../context/UserContext"; // Adjust the path if necessary
 import "../Styles/RegisterComplaint.css";
-import Axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const RegisterComplaint = () => {
+  const { userEmail } = useContext(UserContext); // Assuming you want to pre-fill with user's email if logged in
   const [issueType, setIssueType] = useState("");
   const [description, setDescription] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
+  const [email, setEmail] = useState(userEmail || ""); // Set initial value based on context
   const [userName, setUserName] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
 
@@ -15,8 +19,10 @@ const RegisterComplaint = () => {
       issueType,
       description,
       isAnonymous,
+      email, // Include email in the complaint data
       ...(isAnonymous ? {} : { userName, roomNumber }),
     };
+
     try {
       const response = await fetch(
         "http://localhost:8093/api/registercomplaint",
@@ -29,20 +35,25 @@ const RegisterComplaint = () => {
 
       const result = await response.json();
       if (response.ok) {
-        console.log(result.message);
+        toast.success("Complaint submitted successfully!");
         // Clear the form
         setIssueType("");
         setDescription("");
         setIsAnonymous(false);
+        setEmail(userEmail || ""); // Reset email
+        setUserName("");
+        setRoomNumber("");
       } else {
-        console.error(result.error);
+        toast.error(`Error: ${result.error}`);
       }
     } catch (error) {
-      console.error("Error submitting complaint:", error);
+      toast.error("Error submitting complaint. Please try again.");
     }
   };
+
   return (
     <div className="register-complaint">
+      <ToastContainer />
       <h2>Register a Complaint</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -103,6 +114,13 @@ const RegisterComplaint = () => {
             />
           </>
         )}
+        <input
+          type="email"
+          placeholder="Your Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
         <button type="submit" className="submit-button">
           Submit Complaint
         </button>

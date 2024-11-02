@@ -11,25 +11,31 @@ import AboutUs from "./SideBarComponent.jsx/AboutUs";
 import MyComplaint from "./SideBarComponent.jsx/MyComplaint";
 import RegisterComplaint from "./SideBarComponent.jsx/RegisterComplaint";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route
-          path="/registercomplaint"
-          element={<RegisterComplaint />}
-        ></Route>
-        <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
-        <Route path="/resetPassword/:token" element={<ResetPassword />}></Route>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route path="/mycomplaint" element={<MyComplaint />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route
+            path="/registercomplaint"
+            element={<RegisterComplaint />}
+          ></Route>
+          <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
+          <Route
+            path="/resetPassword/:token"
+            element={<ResetPassword />}
+          ></Route>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/mycomplaint" element={<MyComplaint />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 
