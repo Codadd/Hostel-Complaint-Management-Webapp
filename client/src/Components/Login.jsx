@@ -2,19 +2,23 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../App.css"; // Make sure this file exists
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
+  // const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   Axios.defaults.withCredentials = true;
   const handleSubmit = (e) => {
     e.preventDefault();
     Axios.post("http://localhost:8093/auth/login", {
-      email,
+      userId,
       password,
     })
       .then((response) => {
-        if (response.data.status) {
+        if (response.data && response.data.userId) {
+          localStorage.setItem("userId", response.data.userId);
+          console.log("User ID saved to local storage:", response.data.userId);
           navigate("/");
         }
       })
@@ -27,9 +31,9 @@ const Login = () => {
       <h2>Login!</h2>
       <form onSubmit={handleSubmit}>
         <input
-          placeholder="email"
-          name="email"
-          onChange={(e) => setEmail(e.target.value)}
+          placeholder="User ID"
+          name="userId"
+          onChange={(e) => setUserId(e.target.value)}
         />
         <input
           placeholder="password"

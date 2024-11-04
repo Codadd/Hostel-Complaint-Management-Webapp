@@ -4,14 +4,38 @@ import Complaint from "../models/Complaint.js";
 
 const router = express.Router();
 
+// Get complaints for the logged-in user
+// Inside your complaints.js route file
+router.get("/mycomplaint", async (req, res) => {
+  const userId = req.headers.userId; // Extract userId from headers
+  console.log("Fetching complaints for User ID:", userId); // Log the user ID
+
+  try {
+    const complaints = await Complaint.find({ userId }); // Query by userId
+    console.log("Found complaints:", complaints); // Log the fetched complaints
+    res.status(200).json({ complaints }); // Send back the complaints
+  } catch (error) {
+    console.error("Error fetching complaints:", error);
+    res.status(500).json({ error: "Failed to fetch complaints" });
+  }
+});
+
 // POST route to register a complaint
 router.post("/registercomplaint", async (req, res) => {
   try {
-    const { issueType, description, isAnonymous, roomNumber, email, userName } =
-      req.body; // Include email and userName from request body
+    const {
+      userId,
+      issueType,
+      description,
+      isAnonymous,
+      roomNumber,
+      email,
+      userName,
+    } = req.body; // Include email and userName from request body
 
     // Create a complaint object
     const complaintData = {
+      userId,
       issueType,
       description,
       isAnonymous,

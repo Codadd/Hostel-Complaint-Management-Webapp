@@ -30,7 +30,7 @@ mongoose
 // Set up routes
 app.use("/auth", UserRouter);
 app.use("/api", complaintRoutes);
-
+app.use("/complaints", complaintRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

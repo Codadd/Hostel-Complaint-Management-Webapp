@@ -1,52 +1,61 @@
 import React, { useState, useContext } from "react";
-import { UserContext } from "../context/UserContext"; // Adjust the path if necessary
+import { UserContext } from "../context/UserContext"; // Adjust path if necessary
 import "../Styles/RegisterComplaint.css";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
 const RegisterComplaint = () => {
-  const { userEmail } = useContext(UserContext); // Assuming you want to pre-fill with user's email if logged in
+  const { userEmail } = useContext(UserContext); // Assuming UserContext has the user’s email
   const [issueType, setIssueType] = useState("");
   const [description, setDescription] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [email, setEmail] = useState(userEmail || ""); // Set initial value based on context
+  const [email, setEmail] = useState(userEmail || ""); // Pre-fill based on context
   const [userName, setUserName] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Retrieve userId from localStorage
+    const userId = localStorage.getItem("userId");
+
+    // Check for userId availability
+    if (!userId) {
+      toast.error("User ID not found. Please log in again.");
+      return;
+    }
+
+    // Prepare complaint data with userId
     const complaintData = {
+      userId,
       issueType,
       description,
       isAnonymous,
       email, // Include email in the complaint data
-      ...(isAnonymous ? {} : { userName, roomNumber }),
+      ...(isAnonymous ? {} : { userName, roomNumber }), // Only include name and room number if not anonymous
     };
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         "http://localhost:8093/api/registercomplaint",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(complaintData),
-        }
+        complaintData
       );
 
-      const result = await response.json();
-      if (response.ok) {
+      if (response.status === 201) {
         toast.success("Complaint submitted successfully!");
         // Clear the form
         setIssueType("");
         setDescription("");
         setIsAnonymous(false);
-        setEmail(userEmail || ""); // Reset email
+        setEmail(userEmail || ""); // Reset email based on context
         setUserName("");
         setRoomNumber("");
       } else {
-        toast.error(`Error: ${result.error}`);
+        toast.error(`Error: ${response.data.error}`);
       }
     } catch (error) {
+      console.error("Error submitting complaint:", error);
       toast.error("Error submitting complaint. Please try again.");
     }
   };
@@ -96,6 +105,7 @@ const RegisterComplaint = () => {
             Submit anonymously
           </label>
         </div>
+
         {!isAnonymous && (
           <>
             <input
@@ -114,6 +124,7 @@ const RegisterComplaint = () => {
             />
           </>
         )}
+
         <input
           type="email"
           placeholder="Your Email"
@@ -121,6 +132,7 @@ const RegisterComplaint = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+
         <button type="submit" className="submit-button">
           Submit Complaint
         </button>
