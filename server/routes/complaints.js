@@ -7,7 +7,7 @@ const router = express.Router();
 // Get complaints for the logged-in user
 // Inside your complaints.js route file
 router.get("/mycomplaint", async (req, res) => {
-  const userId = req.headers.userId; // Extract userId from headers
+  const userId = req.headers.userid; // Extract userId from headers
   console.log("Fetching complaints for User ID:", userId); // Log the user ID
 
   try {
