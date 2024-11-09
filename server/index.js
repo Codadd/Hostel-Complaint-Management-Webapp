@@ -7,8 +7,6 @@ import cookieParser from "cookie-parser";
 import { UserRouter } from "./routes/user.js";
 import complaintRoutes from "./routes/complaints.js";
 import adminRoutes from "./routes/admincomplaint.js";
-import AdminComplaint from "./models/AdminComplaint.js";
-
 dotenv.config();
 const PORT = 8093;
 const app = express();
