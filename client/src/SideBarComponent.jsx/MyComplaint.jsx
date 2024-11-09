@@ -1,61 +1,63 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-import "../Styles/MyComplaint.css";
 
 const MyComplaint = () => {
   const [complaints, setComplaints] = useState([]);
   const userId = localStorage.getItem("userId");
 
-  const fetchComplaints = async () => {
+  useEffect(() => {
+    if (userId) {
+      fetchUserComplaints();
+    } else {
+      console.error("User not logged in");
+    }
+  }, [userId]);
+
+  // Fetch complaints for the logged-in user
+  const fetchUserComplaints = async () => {
     try {
       const response = await Axios.get(
-        `http://localhost:8093/api/mycomplaint`,
+        "http://localhost:8093/api/mycomplaint",
         {
-          headers: { userId },
+          headers: { userid: userId },
         }
       );
-      console.log("API Response:", response.data); // Log the entire response
-      setComplaints(response.data.complaints || []);
+      setComplaints(response.data.complaints);
     } catch (error) {
       console.error("Error fetching complaints:", error);
-      setComplaints([]); // Set to empty array on error
     }
   };
 
-  useEffect(() => {
-    fetchComplaints();
-  }, []);
-
   return (
-    <div className="my-complaints-container">
-      <h2>My Complaints</h2>
+    <div className="my-complaints">
+      <h1>My Complaints</h1>
       <table className="complaints-table">
         <thead>
           <tr>
-            <th>Complaint ID</th>
-            <th>Description</th>
             <th>Issue Type</th>
+            <th>Description</th>
             <th>Date Submitted</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(complaints) && complaints.length > 0 ? (
+          {complaints && complaints.length > 0 ? (
             complaints.map((complaint) => (
               <tr key={complaint._id}>
-                <td>{complaint._id}</td>
+                {/* Wrapping each piece of content in a <td> */}
+                <td>{complaint.issueType}</td>
                 <td>{complaint.description}</td>
-                <td>{complaint.issueType || "N/A"}</td>
                 <td>
-                  {new Date(complaint.createdAt).toLocaleDateString("en-US") ||
-                    "N/A"}
+                  {new Date(complaint.dateSubmitted).toLocaleDateString(
+                    "en-US"
+                  )}
                 </td>
-                <td>{complaint.status || "N/A"}</td>
+                <td>{complaint.status}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="5">No complaints found.</td>
+              <td colSpan="4">No complaints found.</td>
             </tr>
           )}
         </tbody>

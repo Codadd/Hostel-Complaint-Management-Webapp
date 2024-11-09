@@ -6,7 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { UserRouter } from "./routes/user.js";
 import complaintRoutes from "./routes/complaints.js";
-import adminRoutes from "./routes/admincomplaint.js";
+import adminComplaintRoutes from "./routes/admincomplaint.js"; // Make sure this is the correct path
 
 dotenv.config();
 const PORT = 8093;
@@ -31,8 +31,9 @@ mongoose
 // Set up routes
 app.use("/auth", UserRouter);
 app.use("/api", complaintRoutes);
-app.use("/complaints", complaintRoutes);
-app.use("/admincomplaint", adminRoutes);
+// app.use("/api/complaints", complaintRoutes);
+app.use("/admincomplaint", adminComplaintRoutes); // Admin-specific complaint routes
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

@@ -4,28 +4,67 @@ import Complaint from "../models/Complaint.js";
 
 const router = express.Router();
 
-// Update complaint status and response
-router.put("/admincomplaint/update/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { status, response } = req.body;
+// Update complaint status and response, and send email to user
+// router.put("/admincomplaint/update/:id", async (req, res) => {
+//   const { id } = req.params;
+//   const { status, response } = req.body;
 
-    // Logic to find and update the complaint by ID
-    const updatedComplaint = await Complaint.findByIdAndUpdate(
-      id,
-      { status, response },
-      { new: true }
-    );
+//   try {
+//     // Find and update the complaint
+//     const updatedComplaint = await Complaint.findByIdAndUpdate(
+//       id,
+//       { status, response },
+//       { new: true }
+//     );
 
-    if (!updatedComplaint) {
-      return res.status(404).json({ error: "Complaint not found" });
-    }
+//     if (!updatedComplaint) {
+//       return res.status(404).json({ error: "Complaint not found" });
+//     }
 
-    res.status(200).json(updatedComplaint);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to update complaint" });
-  }
-});
+//     // Send email if the complaint is not anonymous and has an email associated
+//     if (!updatedComplaint.isAnonymous && updatedComplaint.email) {
+//       const transporter = nodemailer.createTransport({
+//         service: "gmail",
+//         auth: {
+//           user: process.env.EMAIL_USER,
+//           pass: process.env.EMAIL_PASS,
+//         },
+//       });
+
+//       const mailOptions = {
+//         from: process.env.EMAIL_USER,
+//         to: updatedComplaint.email,
+//         subject: "Complaint Status Updated",
+//         text: `
+//           Hello ${updatedComplaint.userName},
+
+//           The status of your complaint regarding "${
+//             updatedComplaint.issueType
+//           }" has been updated to: ${updatedComplaint.status}.
+
+//           Response: ${updatedComplaint.response || "No response yet."}
+
+//           Thank you,
+//           Hostel Management Team`,
+//       };
+
+//       try {
+//         await transporter.sendMail(mailOptions);
+//       } catch (emailError) {
+//         console.error("Error sending email:", emailError);
+//         return res.status(500).json({
+//           message: "Complaint updated, but failed to send confirmation email",
+//         });
+//       }
+//     }
+
+//     // Respond with updated complaint
+//     res.status(200).json(updatedComplaint);
+//   } catch (error) {
+//     console.error("Error updating complaint:", error);
+//     res.status(500).json({ error: "Failed to update complaint" });
+//   }
+// });
 
 // Get all complaints with optional filters
 router.get("/admincomplaint/all", async (req, res) => {
@@ -33,7 +72,7 @@ router.get("/admincomplaint/all", async (req, res) => {
   let filter = {};
 
   if (status) filter.status = status;
-  if (category) filter.issueType = category; // assuming "issueType" is the category field
+  if (category) filter.issueType = category;
 
   try {
     const complaints = await Complaint.find(filter);
@@ -47,12 +86,12 @@ router.get("/admincomplaint/all", async (req, res) => {
 // Get complaints for the logged-in user
 router.get("/mycomplaint", async (req, res) => {
   const userId = req.headers.userid; // Extract userId from headers
-  console.log("Fetching complaints for User ID:", userId); // Log the user ID
+  console.log("Fetching complaints for User ID:", userId);
 
   try {
-    const complaints = await Complaint.find({ userId }); // Query by userId
-    console.log("Found complaints:", complaints); // Log the fetched complaints
-    res.status(200).json({ complaints }); // Send back the complaints
+    const complaints = await Complaint.find({ userId });
+    console.log("Found complaints:", complaints);
+    res.status(200).json({ complaints });
   } catch (error) {
     console.error("Error fetching complaints:", error);
     res.status(500).json({ error: "Failed to fetch complaints" });
@@ -70,9 +109,8 @@ router.post("/registercomplaint", async (req, res) => {
       roomNumber,
       email,
       userName,
-    } = req.body; // Include email and userName from request body
+    } = req.body;
 
-    // Create a complaint object
     const complaintData = {
       userId,
       issueType,
