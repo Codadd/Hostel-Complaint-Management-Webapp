@@ -1,0 +1,139 @@
+/* Global Settings */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Admin Dashboard Container */
+  .admin-dashboard {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-dashboard h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Filters Section */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+    background: #eef2f5;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .filters label {
+    font-weight: 600;
+    color: #555;
+    margin-right: 5px;
+  }
+  
+  .filters select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #ffffff;
+  }
+  
+  .filters button {
+    padding: 8px 16px;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .filters button:hover {
+    background: #004a99;
+  }
+  
+  /* Complaints Table */
+  .complaints-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .complaints-table th, .complaints-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .complaints-table th {
+    background: #0066cc;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  
+  .complaints-table td {
+    color: #333;
+    font-size: 14px;
+  }
+  
+  .complaints-table tr:nth-child(even) {
+    background: #f9f9f9;
+  }
+  
+  .complaints-table tr:hover {
+    background: #eef2f5;
+  }
+  
+  /* Status Dropdown */
+  .complaints-table select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+  }
+  
+  /* Action Button */
+  .complaints-table button {
+    padding: 6px 12px;
+    color: white;
+    background: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.3s;
+  }
+  
+  .complaints-table button:hover {
+    background: #218838;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .complaints-table th, .complaints-table td {
+      padding: 10px 8px;
+      font-size: 12px;
+    }
+  
+    .admin-dashboard h1 {
+      font-size: 20px;
+    }
+  }
+  

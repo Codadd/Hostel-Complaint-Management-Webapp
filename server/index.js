@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import { UserRouter } from "./routes/user.js";
 import complaintRoutes from "./routes/complaints.js";
 import adminRoutes from "./routes/admincomplaint.js";
+import AdminComplaint from "./models/AdminComplaint.js";
 
 dotenv.config();
 const PORT = 8093;
@@ -32,6 +33,7 @@ mongoose
 app.use("/auth", UserRouter);
 app.use("/api", complaintRoutes);
 app.use("/complaints", complaintRoutes);
+app.use("/api", adminRoutes);
 app.use("/admincomplaint", adminRoutes);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
