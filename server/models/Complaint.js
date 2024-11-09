@@ -8,8 +8,13 @@ const complaintSchema = new mongoose.Schema(
     issueType: { type: String, required: true },
     description: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
+    email: String, // add this field if it’s not present
     isAnonymous: { type: Boolean, default: false },
-    status: { type: String, enum: ["pending", "in-progress", "resolved"], default: "pending" }, // Add status field
+    status: {
+      type: String,
+      enum: ["pending", "in-progress", "resolved"],
+      default: "pending",
+    }, // Add status field
     adminResponse: { type: String }, // Add adminResponse field for admin's reply
     updatedAt: { type: Date, default: Date.now }, // Automatically set to current date on creation
 
