@@ -10,8 +10,6 @@ import adminComplaintRoutes from "./routes/admincomplaint.js"; // Adjust path as
 
 import adminRoutes from "./routes/admincomplaint.js";
 
-
-
 dotenv.config();
 const PORT = 8093;
 const app = express();
@@ -28,7 +26,7 @@ app.use(cookieParser());
 
 // Connect to the `hostelmanagement` database
 mongoose
-  .connect("mongodb+srv://shrestha:sh1234@cluster1.vq23j.mongodb.net/")
+  .connect("mongodb+srv://aditisonkar2409:1234@cluster4.due5n.mongodb.net/")
   .then(() => console.log("Connected to hostelmanagement database"))
   .catch((error) => console.error("Database connection error:", error));
 
@@ -42,7 +40,6 @@ app.use("/admincomplaint", adminRoutes);
 
 // app.use("/api/complaints", complaintRoutes);
 app.use("/admincomplaint", adminComplaintRoutes); // Admin-specific complaint routes
-
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

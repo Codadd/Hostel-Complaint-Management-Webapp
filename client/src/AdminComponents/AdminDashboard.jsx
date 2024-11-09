@@ -52,9 +52,9 @@ const AdminDashboard = () => {
 
   // Handle Logout
   const handleLogout = () => {
-    localStorage.removeItem("adminToken");
-    sessionStorage.removeItem("adminToken");
-    navigate("/");
+    localStorage.removeItem("adminId"); // Use "adminId" instead of "adminToken"
+    sessionStorage.removeItem("adminId"); // Also clear from session storage, if used
+    navigate("/"); // Redirect to main page
   };
 
   return (
