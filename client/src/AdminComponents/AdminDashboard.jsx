@@ -1,6 +1,7 @@
 // admindashboard.jsx
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import "../Styles/AdminDashboard.css";
 
 
 const AdminDashboard = () => {
@@ -24,7 +25,6 @@ const AdminDashboard = () => {
       console.error("Error fetching complaints:", error);
     }
   };
-
   // Update complaint status and response
   const handleUpdateStatus = async (id, newStatus, responseText) => {
     try {
@@ -39,6 +39,14 @@ const AdminDashboard = () => {
             : complaint
         )
       );
+
+  // Function to update complaint status
+  const handleUpdateStatus = async (id, newStatus) => {
+    try {
+      await Axios.put(`http://localhost:8093/admincomplaint/update/${id}`, {
+        status: newStatus,
+      });
+
       fetchComplaints(); // Refresh complaints list after update
     } catch (error) {
       console.error("Error updating complaint:", error);
@@ -68,14 +76,24 @@ const AdminDashboard = () => {
           onChange={(e) => setCategoryFilter(e.target.value)}
         >
           <option value="">All</option>
+
           <option value="maintenance">Maintenance</option>
           <option value="cleaning">Cleaning</option>
           <option value="other">Other</option>
+
+          <option value="Maintenance">Maintenance</option>
+          <option value="Water">Water</option>
+          <option value="Cleanliness">Cleanliness</option>
+          <option value="Noise">Noise</option>
+          <option value="Electricity">Electricity</option>
+          <option value="Other">Other</option>
+
         </select>
         
       </div>
 
       {/* Complaints Table */}
+
       <table className="complaints-table">
         <thead>
           <tr>
@@ -130,12 +148,58 @@ const AdminDashboard = () => {
               </tr>
             ))
           ) : (
+
+      <div className="table-container">
+        <table className="complaints-table">
+          <thead>
+
             <tr>
-              <td colSpan="8">No complaints found.</td>
+              <th>User ID</th>
+              <th>Description</th>
+              <th>Issue Type</th>
+              <th>Date Submitted</th>
+              <th>Actions</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {complaints.length > 0 ? (
+              complaints.map((complaint) => (
+                <tr key={complaint._id}>
+                  <td>{complaint.userId}</td>
+                  <td>{complaint.description}</td>
+                  <td>{complaint.issueType}</td>
+                  <td>
+                    {new Date(complaint.createdAt).toLocaleDateString("en-US")}
+                  </td>
+                  <td>
+                    <select
+                      value={complaint.status}
+                      onChange={(e) =>
+                        handleUpdateStatus(complaint._id, e.target.value)
+                      }
+                    >
+                      <option value="Pending">Pending</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Resolved">Resolved</option>
+                    </select>
+                    {/* <button
+                      onClick={() =>
+                        handleUpdateStatus(complaint._id, "Resolved")
+                      }
+                    >
+                      Mark as Resolved
+                    </button> */}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">No complaints found.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
