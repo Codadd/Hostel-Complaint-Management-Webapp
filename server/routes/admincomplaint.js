@@ -1,14 +1,15 @@
 // routes/complaints.js
 import express from "express";
 import Complaint from "../models/Complaint.js";
+
 const router = express.Router();
 
-// Fetch all complaints
-// Fetch all complaints for the admin dashboard
+// Fetch all complaints for the admin dashboard with optional filters
 router.get("/all", async (req, res) => {
   const { status, category } = req.query;
   let filter = {};
 
+  // Apply filters based on status and category if provided
   if (status) {
     filter.status = status;  // Filter complaints based on status (e.g., 'pending', 'resolved')
   }
@@ -29,18 +30,23 @@ router.get("/all", async (req, res) => {
 // Update a complaint
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
-  const { status, adminResponse } = req.body;
+  const { action } = req.body;
+  
   try {
     const updatedComplaint = await Complaint.findByIdAndUpdate(
       id,
-      { status, adminResponse },
+      { action },
       { new: true }
     );
+    if (!updatedComplaint) {
+      return res.status(404).json({ error: "Complaint not found" });
+    }
+
     res.status(200).json(updatedComplaint);
   } catch (error) {
+    console.error("Error updating complaint:", error);
     res.status(500).json({ message: "Error updating complaint" });
   }
 });
 
 export default router;
-
