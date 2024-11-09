@@ -1,18 +1,18 @@
-// admindashboard.jsx
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook for redirection
 import "../Styles/AdminDashboard.css";
-
 
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
+  const navigate = useNavigate();
 
-  // Fetch complaints on component load or when filters change
+  // Fetch complaints when the component is loaded
   useEffect(() => {
     fetchComplaints();
-  }, [statusFilter, categoryFilter]);
+  }, []);
 
   // Fetch complaints based on filters
   const fetchComplaints = async () => {
@@ -25,13 +25,19 @@ const AdminDashboard = () => {
       console.error("Error fetching complaints:", error);
     }
   };
+
+  // Handle the application of filters
+  const handleApplyFilters = () => {
+    fetchComplaints(); // Fetch complaints again with the selected filters
+  };
+
   // Update complaint status and response
   const handleUpdateStatus = async (id, newStatus, responseText) => {
     try {
-      const result = await Axios.put(
-        `http://localhost:8093/complaints/update/${id}`,
-        { status: newStatus, adminResponse: responseText }
-      );
+      await Axios.put(`http://localhost:8093/complaints/update/${id}`, {
+        status: newStatus,
+        adminResponse: responseText,
+      });
       setComplaints((prevComplaints) =>
         prevComplaints.map((complaint) =>
           complaint._id === id
@@ -39,23 +45,28 @@ const AdminDashboard = () => {
             : complaint
         )
       );
-
-  // Function to update complaint status
-  const handleUpdateStatus = async (id, newStatus) => {
-    try {
-      await Axios.put(`http://localhost:8093/admincomplaint/update/${id}`, {
-        status: newStatus,
-      });
-
-      fetchComplaints(); // Refresh complaints list after update
     } catch (error) {
       console.error("Error updating complaint:", error);
     }
   };
 
+  // Handle Logout
+  const handleLogout = () => {
+    localStorage.removeItem("adminToken");
+    sessionStorage.removeItem("adminToken");
+    navigate("/");
+  };
+
   return (
     <div className="admin-dashboard">
       <h1>Admin Dashboard - Complaints Management</h1>
+
+      {/* Logout Button */}
+      <div className="logout-container">
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
 
       {/* Filters Section */}
       <div className="filters">
@@ -76,88 +87,27 @@ const AdminDashboard = () => {
           onChange={(e) => setCategoryFilter(e.target.value)}
         >
           <option value="">All</option>
-
           <option value="maintenance">Maintenance</option>
           <option value="cleaning">Cleaning</option>
           <option value="other">Other</option>
-
-          <option value="Maintenance">Maintenance</option>
-          <option value="Water">Water</option>
-          <option value="Cleanliness">Cleanliness</option>
-          <option value="Noise">Noise</option>
-          <option value="Electricity">Electricity</option>
-          <option value="Other">Other</option>
-
         </select>
-        
+
+        <button className="apply-filter-btn" onClick={handleApplyFilters}>
+          Apply Filters
+        </button>
       </div>
 
       {/* Complaints Table */}
-
-      <table className="complaints-table">
-        <thead>
-          <tr>
-            <th>User ID</th>
-            <th>Description</th>
-            <th>Issue Type</th>
-            <th>Date Submitted</th>
-            <th>Status</th>
-            <th>Response</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {complaints.length > 0 ? (
-            complaints.map((complaint) => (
-              <tr key={complaint._id}>
-                <td>{complaint.userId}</td>
-                <td>{complaint.description}</td>
-                <td>{complaint.issueType}</td>
-                <td>
-                  {new Date(complaint.createdAt).toLocaleDateString("en-US")}
-                </td>
-                <td>{complaint.status}</td>
-                <td>{complaint.adminResponse || "No response"}</td>
-                <td>
-                  <select
-                    value={complaint.status}
-                    onChange={(e) =>
-                      handleUpdateStatus(
-                        complaint._id,
-                        e.target.value,
-                        "Status updated by admin"
-                      )
-                    }
-                  >
-                    <option value="pending">Pending</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="resolved">Resolved</option>
-                  </select>
-                  <button
-                    onClick={() =>
-                      handleUpdateStatus(
-                        complaint._id,
-                        "resolved",
-                        "Resolved by admin"
-                      )
-                    }
-                  >
-                    Mark as Resolved
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-
       <div className="table-container">
         <table className="complaints-table">
           <thead>
-
             <tr>
               <th>User ID</th>
               <th>Description</th>
               <th>Issue Type</th>
               <th>Date Submitted</th>
+              <th>Status</th>
+              <th>Response</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -171,30 +121,40 @@ const AdminDashboard = () => {
                   <td>
                     {new Date(complaint.createdAt).toLocaleDateString("en-US")}
                   </td>
+                  <td>{complaint.status}</td>
+                  <td>{complaint.adminResponse || "No response"}</td>
                   <td>
                     <select
                       value={complaint.status}
                       onChange={(e) =>
-                        handleUpdateStatus(complaint._id, e.target.value)
+                        handleUpdateStatus(
+                          complaint._id,
+                          e.target.value,
+                          "Status updated by admin"
+                        )
                       }
                     >
-                      <option value="Pending">Pending</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Resolved">Resolved</option>
+                      <option value="pending">Pending</option>
+                      <option value="in-progress">In Progress</option>
+                      <option value="resolved">Resolved</option>
                     </select>
-                    {/* <button
+                    <button
                       onClick={() =>
-                        handleUpdateStatus(complaint._id, "Resolved")
+                        handleUpdateStatus(
+                          complaint._id,
+                          "resolved",
+                          "Resolved by admin"
+                        )
                       }
                     >
                       Mark as Resolved
-                    </button> */}
+                    </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5">No complaints found.</td>
+                <td colSpan="7">No complaints found.</td>
               </tr>
             )}
           </tbody>

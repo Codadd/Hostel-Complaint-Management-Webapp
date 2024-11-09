@@ -1,7 +1,7 @@
 import express from "express";
 import nodemailer from "nodemailer";
 import Complaint from "../models/Complaint.js";
-import AdminComplaint from "../models/AdminComplaint.js";
+
 
 
 const router = express.Router();
@@ -127,4 +127,3 @@ router.post("/registercomplaint", async (req, res) => {
 });
 
 export default router;
-

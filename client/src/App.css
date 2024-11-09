@@ -44,6 +44,28 @@ html, body {
   justify-content: center;
 }
 
+/* CSS to position the logout button to the right */
+.logout-container {
+  display: flex;
+  justify-content: flex-end; /* Align the logout button to the right */
+  margin-bottom: 10px; /* Optional: Add some spacing between the button and the rest of the content */
+}
+
+.logout-btn {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-btn:hover {
+  background-color: #ff1a1a;
+}
+
+
 /* Admin Dashboard Container */
 .admin-dashboard {
   width: 100vw;

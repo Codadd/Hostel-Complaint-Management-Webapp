@@ -6,6 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { UserRouter } from "./routes/user.js";
 import complaintRoutes from "./routes/complaints.js";
+import adminComplaintRoutes from "./routes/admincomplaint.js"; // Adjust path as needed
 
 import adminRoutes from "./routes/admincomplaint.js";
 
