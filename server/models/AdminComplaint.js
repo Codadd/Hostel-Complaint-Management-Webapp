@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 const complaintSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "RegisterComplaint", required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
   category: {
@@ -19,4 +19,6 @@ const complaintSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("Complaint", complaintSchema);
+
+
+export default mongoose.model("AdminComplaint", complaintSchema);

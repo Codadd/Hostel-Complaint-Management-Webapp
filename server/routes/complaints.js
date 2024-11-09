@@ -1,73 +1,14 @@
 import express from "express";
 import nodemailer from "nodemailer";
 import Complaint from "../models/Complaint.js";
+import AdminComplaint from "../models/AdminComplaint.js";
+
 
 const router = express.Router();
 
-// Update complaint status and response, and send email to user
-// router.put("/admincomplaint/update/:id", async (req, res) => {
-//   const { id } = req.params;
-//   const { status, response } = req.body;
 
-//   try {
-//     // Find and update the complaint
-//     const updatedComplaint = await Complaint.findByIdAndUpdate(
-//       id,
-//       { status, response },
-//       { new: true }
-//     );
-
-//     if (!updatedComplaint) {
-//       return res.status(404).json({ error: "Complaint not found" });
-//     }
-
-//     // Send email if the complaint is not anonymous and has an email associated
-//     if (!updatedComplaint.isAnonymous && updatedComplaint.email) {
-//       const transporter = nodemailer.createTransport({
-//         service: "gmail",
-//         auth: {
-//           user: process.env.EMAIL_USER,
-//           pass: process.env.EMAIL_PASS,
-//         },
-//       });
-
-//       const mailOptions = {
-//         from: process.env.EMAIL_USER,
-//         to: updatedComplaint.email,
-//         subject: "Complaint Status Updated",
-//         text: `
-//           Hello ${updatedComplaint.userName},
-
-//           The status of your complaint regarding "${
-//             updatedComplaint.issueType
-//           }" has been updated to: ${updatedComplaint.status}.
-
-//           Response: ${updatedComplaint.response || "No response yet."}
-
-//           Thank you,
-//           Hostel Management Team`,
-//       };
-
-//       try {
-//         await transporter.sendMail(mailOptions);
-//       } catch (emailError) {
-//         console.error("Error sending email:", emailError);
-//         return res.status(500).json({
-//           message: "Complaint updated, but failed to send confirmation email",
-//         });
-//       }
-//     }
-
-//     // Respond with updated complaint
-//     res.status(200).json(updatedComplaint);
-//   } catch (error) {
-//     console.error("Error updating complaint:", error);
-//     res.status(500).json({ error: "Failed to update complaint" });
-//   }
-// });
-
-// Get all complaints with optional filters
-router.get("/admincomplaint/all", async (req, res) => {
+// Fetch all complaints with optional filters for the admin dashboard
+router.get("/all", async (req, res) => {
   const { status, category } = req.query;
   let filter = {};
 
@@ -82,6 +23,25 @@ router.get("/admincomplaint/all", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch complaints" });
   }
 });
+
+// Update a complaint's status and admin response
+router.put("/update/:id", async (req, res) => {
+  const { id } = req.params;
+  const { status, adminResponse } = req.body;
+
+  try {
+    const updatedComplaint = await Complaint.findByIdAndUpdate(
+      id,
+      { status, adminResponse, updatedAt: Date.now() },
+      { new: true }
+    );
+    res.status(200).json(updatedComplaint);
+  } catch (error) {
+    console.error("Error updating complaint:", error);
+    res.status(500).json({ message: "Error updating complaint" });
+  }
+});
+
 
 // Get complaints for the logged-in user
 router.get("/mycomplaint", async (req, res) => {
@@ -167,3 +127,4 @@ router.post("/registercomplaint", async (req, res) => {
 });
 
 export default router;
+
