@@ -6,6 +6,7 @@ import AdminComplaint from "../models/AdminComplaint.js";
 
 const router = express.Router();
 
+
 // Fetch all complaints with optional filters for the admin dashboard
 router.get("/all", async (req, res) => {
   const { status, category } = req.query;
@@ -45,12 +46,12 @@ router.put("/update/:id", async (req, res) => {
 // Get complaints for the logged-in user
 router.get("/mycomplaint", async (req, res) => {
   const userId = req.headers.userid; // Extract userId from headers
-  console.log("Fetching complaints for User ID:", userId); // Log the user ID
+  console.log("Fetching complaints for User ID:", userId);
 
   try {
-    const complaints = await Complaint.find({ userId }); // Query by userId
-    console.log("Found complaints:", complaints); // Log the fetched complaints
-    res.status(200).json({ complaints }); // Send back the complaints
+    const complaints = await Complaint.find({ userId });
+    console.log("Found complaints:", complaints);
+    res.status(200).json({ complaints });
   } catch (error) {
     console.error("Error fetching complaints:", error);
     res.status(500).json({ error: "Failed to fetch complaints" });
@@ -68,9 +69,8 @@ router.post("/registercomplaint", async (req, res) => {
       roomNumber,
       email,
       userName,
-    } = req.body; // Include email and userName from request body
+    } = req.body;
 
-    // Create a complaint object
     const complaintData = {
       userId,
       issueType,
@@ -127,4 +127,3 @@ router.post("/registercomplaint", async (req, res) => {
 });
 
 export default router;
-

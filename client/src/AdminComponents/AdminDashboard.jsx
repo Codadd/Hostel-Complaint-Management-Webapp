@@ -1,17 +1,18 @@
-// admindashboard.jsx
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
-
+import { useNavigate } from "react-router-dom"; // Import useNavigate hook for redirection
 
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
+  
+  const navigate = useNavigate(); // Initialize the useNavigate hook for redirecting
 
-  // Fetch complaints on component load or when filters change
+  // Fetch complaints when the component is loaded
   useEffect(() => {
-    fetchComplaints();
-  }, [statusFilter, categoryFilter]);
+    fetchComplaints(); // Initially fetch complaints
+  }, []);
 
   // Fetch complaints based on filters
   const fetchComplaints = async () => {
@@ -23,6 +24,11 @@ const AdminDashboard = () => {
     } catch (error) {
       console.error("Error fetching complaints:", error);
     }
+  };
+
+  // Handle the application of filters
+  const handleApplyFilters = () => {
+    fetchComplaints(); // Fetch complaints again with the selected filters
   };
 
   // Update complaint status and response
@@ -45,9 +51,26 @@ const AdminDashboard = () => {
     }
   };
 
+  // Handle Logout
+  const handleLogout = () => {
+    // Clear session data (if applicable)
+    localStorage.removeItem("adminToken"); // Remove token or session data if stored
+    sessionStorage.removeItem("adminToken"); // If you are using sessionStorage
+
+    // Redirect to the main page
+    navigate("/"); // Redirect to the main page (or login page)
+  };
+
   return (
     <div className="admin-dashboard">
       <h1>Admin Dashboard - Complaints Management</h1>
+
+      {/* Logout Button (Positioned on the Right) */}
+      <div className="logout-container">
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
 
       {/* Filters Section */}
       <div className="filters">
@@ -72,7 +95,11 @@ const AdminDashboard = () => {
           <option value="cleaning">Cleaning</option>
           <option value="other">Other</option>
         </select>
-        
+
+        {/* Apply Filter Button */}
+        <button className="apply-filter-btn" onClick={handleApplyFilters}>
+          Apply Filters
+        </button>
       </div>
 
       {/* Complaints Table */}
@@ -131,7 +158,7 @@ const AdminDashboard = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="8">No complaints found.</td>
+              <td colSpan="7">No complaints found.</td>
             </tr>
           )}
         </tbody>
