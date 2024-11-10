@@ -1,8 +1,7 @@
-import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "../Styles/Sidebar.css";
 import { motion } from "framer-motion";
 import { SidebarData } from "../Data/SidebarData";
-import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
@@ -33,17 +32,16 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <ul>
             {SidebarData.map((item, index) => (
               <li key={index}>
-                {item.isLogout ? (
+                {item.isLogout? (
                   <button onClick={handleLogout} className="logout-btn">
                     {item.icon}
                     {item.title}
                   </button>
-                ) : (
-                  <Link to={item.path}>
-                    {item.icon}
-                    {item.title}
-                  </Link>
-                )}
+                ): (
+                <Link to={item.path}>
+                  {item.icon}
+                  {item.title}
+                </Link>)}
               </li>
             ))}
           </ul>

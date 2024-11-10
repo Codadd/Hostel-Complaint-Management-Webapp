@@ -57,7 +57,11 @@
   }
   
   .complaints-table th {
+<<<<<<< HEAD
+    background-color: black;
+=======
     background-color: #f4f4f4;
+>>>>>>> 80a1a73b55c5e6608e19bc3b3cda90f4a34ddaee
     font-weight: bold;
   }
   

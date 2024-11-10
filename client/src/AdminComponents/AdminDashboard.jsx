@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook for redirection
 import "../Styles/AdminDashboard.css";
+import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
@@ -12,7 +12,8 @@ const AdminDashboard = () => {
   // Fetch complaints when the component is loaded
   useEffect(() => {
     fetchComplaints();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusFilter, categoryFilter]);
 
   // Fetch complaints based on filters
   const fetchComplaints = async () => {
@@ -26,18 +27,13 @@ const AdminDashboard = () => {
     }
   };
 
-  // Handle the application of filters
-  const handleApplyFilters = () => {
-    fetchComplaints(); // Fetch complaints again with the selected filters
-  };
-
   // Update complaint status and response
   const handleUpdateStatus = async (id, newStatus, responseText) => {
     try {
-      await Axios.put(`http://localhost:8093/complaints/update/${id}`, {
-        status: newStatus,
-        adminResponse: responseText,
-      });
+      const result = await Axios.put(
+        `http://localhost:8093/complaints/update/${id}`,
+        { status: newStatus, adminResponse: responseText }
+      );
       setComplaints((prevComplaints) =>
         prevComplaints.map((complaint) =>
           complaint._id === id
@@ -50,12 +46,12 @@ const AdminDashboard = () => {
     }
   };
 
-  // Handle Logout
+  //Handle Logout
   const handleLogout = () => {
-    localStorage.removeItem("adminId"); // Use "adminId" instead of "adminToken"
-    sessionStorage.removeItem("adminId"); // Also clear from session storage, if used
-    navigate("/"); // Redirect to main page
-  };
+    localStorage.removeItem("adminId");// Use "adminId" instead of "adminToken"
+    sessionStorage.removeItem("adminId");// Also clear from session storage, if used
+    navigate("/");// Redirect to main page
+  }
 
   return (
     <div className="admin-dashboard">
@@ -90,9 +86,12 @@ const AdminDashboard = () => {
           <option value="maintenance">Maintenance</option>
           <option value="cleaning">Cleaning</option>
           <option value="other">Other</option>
+          <option value="water">Water</option>
+          <option value="noise">Noise</option>
+          <option value="electricity">Electricity</option>
         </select>
 
-        <button className="apply-filter-btn" onClick={handleApplyFilters}>
+        <button className="apply-filter-btn">
           Apply Filters
         </button>
       </div>
@@ -109,6 +108,7 @@ const AdminDashboard = () => {
               <th>Status</th>
               <th>Response</th>
               <th>Actions</th>
+              <th>Feedback</th>{/*New column for feedback*/}
             </tr>
           </thead>
           <tbody>
@@ -150,6 +150,11 @@ const AdminDashboard = () => {
                       Mark as Resolved
                     </button>
                   </td>
+                   {/* Display feedback for resolved complaints*/}
+                   <td>
+                    {complaint.status === "resolved"
+                      ? complaint.feedback || "No feedback provided" : "N/A"}
+                   </td>
                 </tr>
               ))
             ) : (

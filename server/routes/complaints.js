@@ -2,6 +2,7 @@ import express from "express";
 import nodemailer from "nodemailer";
 import Complaint from "../models/Complaint.js";
 
+
 const router = express.Router();
 
 // Fetch all complaints with optional filters for the admin dashboard
@@ -22,56 +23,63 @@ router.get("/all", async (req, res) => {
 });
 
 // Update a complaint's status and admin response
-// Update a complaint's status and send notification email
+// Update a complaint's status and send email
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
   const { status, adminResponse } = req.body;
 
-  try {
-    // Find the complaint by its ID
+  // try {
+  //   const updatedComplaint = await Complaint.findByIdAndUpdate(
+  //     id,
+  //     { status, adminResponse, updatedAt: Date.now() },
+  //     { new: true }
+  //   );
+  //   res.status(200).json(updatedComplaint);
+  // } catch (error) {
+  //   console.error("Error updating complaint:", error);
+  //   res.status(500).json({ message: "Error updating complaint" });
+  // }
+
+  try{
     const complaint = await Complaint.findById(id);
 
-    if (!complaint) {
-      return res.status(404).json({ message: "Complaint not found" });
+    if(!complaint){
+       return res.status(404).json({message: "complaint not found"});
     }
-
-    // Update the complaint status and admin response
     complaint.status = status;
     complaint.adminResponse = adminResponse;
     complaint.updatedAt = Date.now();
 
     const updatedComplaint = await complaint.save();
 
-    // If the complaint is not anonymous, send an email update
-    if (!complaint.isAnonymous && complaint.email) {
+    if(!complaint.isAnonymous && complaint.email){
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
+          user:process.env.EMAIL_USER,
+          pass:process.env.EMAIL_PASS,
         },
       });
 
       const mailOptions = {
         from: process.env.EMAIL_USER,
         to: complaint.email,
-        subject: `Complaint Status Updated: ${complaint.issueType}`,
-        text: `Hello ${complaint.userName},\n\nYour complaint regarding "${complaint.issueType}" has been updated.\n\nNew Status: ${status}\n\nAdmin Response: ${adminResponse}\n\nThank you,\nHostel Management`,
+        subject: `Complaint Status updated: ${complaint.issueType}`,
+        text:`Hello ${complaint.userName},\n\nYour complaint regarding "${complaint.issueType}" has been updated.\n\nNew status: ${status}\n\nAdmin Response: ${adminResponse}\n\nThank you,\nHostel Management`,
       };
-
-      try {
+      try{
         await transporter.sendMail(mailOptions);
-      } catch (emailError) {
-        console.error("Error sending email:", emailError);
+      }catch(emailError){
+        console.error("Error sending email:",emailError);
         return res.status(500).json({
-          message: "Complaint updated, but failed to send status update email",
+          message:"Complaint updated, but failed to send status update email",
         });
       }
     }
-
     res.status(200).json(updatedComplaint);
-  } catch (error) {
-    console.error("Error updating complaint:", error);
+  }catch(error)
+  {
+    console.error("Error updating complaint:",error);
     res.status(500).json({ message: "Error updating complaint" });
   }
 });
@@ -91,6 +99,32 @@ router.get("/mycomplaint", async (req, res) => {
   }
 });
 
+
+// Route to submit feedback for a specific complaint
+router.put("/feedback/:id", async (req, res) => {
+  try {
+    const { feedback } = req.body;
+    const { id } = req.params;
+
+    // Update complaint with feedback
+    const updatedComplaint = await Complaint.findByIdAndUpdate(
+      id,
+      { feedback },
+      { new: true }
+    );
+
+    if (!updatedComplaint) {
+      return res.status(404).json({ message: "Complaint not found" });
+    }
+
+    res.json({ message: "Feedback submitted successfully", complaint: updatedComplaint });
+  } catch (error) {
+    console.error("Error submitting feedback:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 // POST route to register a complaint
 router.post("/registercomplaint", async (req, res) => {
   try {
@@ -109,7 +143,7 @@ router.post("/registercomplaint", async (req, res) => {
       issueType,
       description,
       isAnonymous,
-      email, // Add email to the saved data
+      email, //Add email to the saved data
     };
 
     // Include userName and roomNumber only if the complaint is not anonymous

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Axios from "axios";
 
 const MyComplaint = () => {
@@ -11,9 +11,30 @@ const MyComplaint = () => {
     } else {
       console.error("User not logged in");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
-  // Fetch complaints for the logged-in user
+  // const fetchComplaints = async () => {
+  //   try {
+  //     const response = await Axios.get(
+  //       `http://localhost:8093/api/mycomplaint`,
+  //       {
+  //         headers: { userId },
+  //       }
+  //     );
+  //     console.log("API Response:", response.data); // Log the entire response
+  //     setComplaints(response.data.complaints || []);
+  //   } catch (error) {
+  //     console.error("Error fetching complaints:", error);
+  //     setComplaints([]); // Set to empty array on error
+  //   }
+  // };
+    
+  // useEffect(() => {
+  //   fetchComplaints();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
   const fetchUserComplaints = async () => {
     try {
       const response = await Axios.get(
@@ -28,6 +49,27 @@ const MyComplaint = () => {
     }
   };
 
+  // Handle feedback change
+  const handleFeedbackChange = (id, feedback) => {
+    setComplaints((prevComplaints) =>
+      prevComplaints.map((complaint) =>
+        complaint._id === id ? { ...complaint, feedback: feedback } : complaint
+      )
+    );
+  };
+   
+    // Submit feedback
+    const handleSubmitFeedback = async (id, feedback) => {
+      try {
+        await Axios.put(`http://localhost:8093/complaints/feedback/${id}`, {
+          feedback: feedback,
+        });
+        fetchUserComplaints(); // Refresh complaints after feedback submission
+      } catch (error) {
+        console.error("Error submitting feedback:", error);
+      }
+    };
+
   return (
     <div className="my-complaints">
       <h1>My Complaints</h1>
@@ -38,21 +80,38 @@ const MyComplaint = () => {
             <th>Description</th>
             <th>Date Submitted</th>
             <th>Status</th>
+
+            <th>Feedback</th>
+
           </tr>
         </thead>
         <tbody>
           {complaints && complaints.length > 0 ? (
             complaints.map((complaint) => (
               <tr key={complaint._id}>
-                {/* Wrapping each piece of content in a <td> */}
                 <td>{complaint.issueType}</td>
                 <td>{complaint.description}</td>
                 <td>
-                  {new Date(complaint.dateSubmitted).toLocaleDateString(
-                    "en-US"
-                  )}
+                  {new Date(complaint.createdAt).toLocaleDateString("en-US")}
                 </td>
                 <td>{complaint.status}</td>
+
+                <td>
+                  {complaint.status === "resolved" ? (
+                    <div>
+                      <textarea
+                        placeholder="Enter feedback"
+                        value={complaint.feedback || ""}
+                        onChange={(e) => handleFeedbackChange(complaint._id, e.target.value)}
+                        />
+                        <button
+                           onClick={()=>handleSubmitFeedback(complaint._id, complaint.feedback)}>
+                            Submit Feedback
+                           </button>
+                    </div>
+                  ) : (<span>No feedback yet</span>)}
+                </td>
+
               </tr>
             ))
           ) : (
@@ -65,5 +124,6 @@ const MyComplaint = () => {
     </div>
   );
 };
+
 
 export default MyComplaint;

@@ -28,6 +28,6 @@ export const SidebarData = [
   {
     title: "LogOut",
     icon: <LogoutIcon />,
-    isLogout: true, // Indicate that this is the logout item
+    isLogout: true,
   },
 ];
