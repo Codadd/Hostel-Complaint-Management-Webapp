@@ -71,8 +71,8 @@ const MyComplaint = () => {
     };
 
   return (
-    <div className="my-complaints-container">
-      <h2>My Complaints</h2>
+    <div className="my-complaints">
+      <h1>My Complaints</h1>
       <table className="complaints-table">
         <thead>
           <tr>
@@ -116,7 +116,7 @@ const MyComplaint = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="5">No complaints found.</td>
+              <td colSpan="4">No complaints found.</td>
             </tr>
           )}
         </tbody>

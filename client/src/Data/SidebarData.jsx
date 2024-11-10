@@ -25,7 +25,6 @@ export const SidebarData = [
     icon: <InfoIcon />,
     path: "/aboutus",
   },
-
   {
     title: "LogOut",
     icon: <LogoutIcon />,

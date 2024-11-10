@@ -5,7 +5,6 @@ import Complaint from "../models/Complaint.js";
 
 const router = express.Router();
 
-
 // Fetch all complaints with optional filters for the admin dashboard
 router.get("/all", async (req, res) => {
   const { status, category } = req.query;
@@ -84,7 +83,6 @@ router.put("/update/:id", async (req, res) => {
     res.status(500).json({ message: "Error updating complaint" });
   }
 });
-
 
 // Get complaints for the logged-in user
 router.get("/mycomplaint", async (req, res) => {

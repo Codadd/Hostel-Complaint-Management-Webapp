@@ -9,7 +9,7 @@ const AdminDashboard = () => {
   const [categoryFilter, setCategoryFilter] = useState("");
   const navigate = useNavigate();
 
-  // Fetch complaints on component load or when filters change
+  // Fetch complaints when the component is loaded
   useEffect(() => {
     fetchComplaints();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,6 +90,10 @@ const AdminDashboard = () => {
           <option value="noise">Noise</option>
           <option value="electricity">Electricity</option>
         </select>
+
+        <button className="apply-filter-btn">
+          Apply Filters
+        </button>
       </div>
 
       {/* Complaints Table */}
@@ -119,7 +123,6 @@ const AdminDashboard = () => {
                   </td>
                   <td>{complaint.status}</td>
                   <td>{complaint.adminResponse || "No response"}</td>
-
                   <td>
                     <select
                       value={complaint.status}

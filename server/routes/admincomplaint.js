@@ -1,6 +1,7 @@
 // routes/complaints.js
 import express from "express";
 import Complaint from "../models/Complaint.js";
+
 const router = express.Router();
 
 // Fetch all complaints
@@ -38,6 +39,7 @@ router.put("/update/:id", async (req, res) => {
 
     res.status(200).json(updatedComplaint);
   } catch (error) {
+    console.error("Error updating complaint:", error);
     res.status(500).json({ message: "Error updating complaint" });
   }
 });
