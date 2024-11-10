@@ -10,25 +10,28 @@
 
 /* Input fields styling */
 input {
-  width: 100%;
+  /* width: 100%; */
   padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+  /* margin-bottom: 15px; */
+  border:none;
+  outline: none;
+  height: 40px;
+  border-radius: 10px;
+  /* font-size: 16px; */
+  
+  
 }
 
 /* Dropdown Styling */
 select {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: #fff;
-  color: #333;
-  cursor: pointer;
+ /* width: 100%; */
+ padding: 10px;
+ /* margin-bottom: 15px; */
+ border:none;
+ outline: none;
+ height: 40px;
+ border-radius: 10px;
+ /* font-size: 16px; */
 }
 
 /* Hover effect on dropdown */
@@ -37,25 +40,22 @@ select:hover {
 }
 
 .my-btn {
-  padding: 12px 20px; /* Add some padding to make the button bigger */
-  background-color: #4CAF50;
-  color: white;
+  width: 130px;
+  height: 47px;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 100%; /* Let the button size adjust to its content */
-  display: inline-block; /* Ensures it adapts to the content */
-  max-width: 250px; 
-  white-space: nowrap; /* Prevents text from wrapping */
-  overflow: hidden; /* Ensures no overflow */
-  text-overflow: ellipsis; /* Adds ellipsis if the text overflows */
-  text-align: center; /* Center the text inside the button */
+  outline: none;
+  border-radius: 20px;
+  margin-left: auto;
+  background-color: rgb(223, 211, 195);
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .my-btn:hover {
-  background-color: #333061;
+  transform: translateY(-3px);
+  background-color: var(--button-hover-bg);
+  box-shadow: 0 8px 20px var(--button-hover-shadow);
 }
 
 /* Add media query for smaller screen sizes */
@@ -65,7 +65,9 @@ select:hover {
     padding: 10px; /* Adjust padding to make it more compact */
   }
 }
-
+.container p {
+  color: beige;
+}
 
 
 /* Error message Styling */
@@ -99,7 +101,7 @@ label {
 }
 body{
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(to top, #190649b3 0%, #251f7481 100%);
+  background: linear-gradient(to top, #010002fa 0%, #1a1a1dd3 100%);
   background-repeat: no-repeat;
   /* background-position: center; */
   width: 100%;
@@ -163,6 +165,9 @@ html, body {
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
 }
+.container h2 {
+  color: beige;
+}
 h2 {
   text-align: center;
   margin-bottom: 20px;
@@ -208,7 +213,7 @@ h2 {
 }
 
 .filters button:hover {
-  background: #3f51b5; /* Slightly darker shade on hover */
+  background: #1e85446f; /* Slightly darker shade on hover */
 }
 
 /* Complaints Table */
@@ -277,11 +282,13 @@ h2 {
 }
 
 .container{
-  width: 300px;
-  height: 100%;
-  background-color: #a69ac5;
-  padding: 30px;
-  border-radius: 20px;
+  background-color: #333;  /* Darker background for the box */
+    padding: 40px 60px;  /* Increased padding to make the box larger */
+    border-radius: 15px;  /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(138, 224, 161, 0.927);  /* Subtle shadow for emphasis */
+    width: auto;  /* Set width to auto to adjust according to content */
+    max-width: 90%;  /* Limit the maximum width to 90% of the page width */
+    margin-top: 20px;  /* Add some space from the main heading */
 }
 form{
   display: flex;
@@ -297,7 +304,7 @@ input{
 }
 h2{
   font-weight: bold;
-  color: rgb(211, 194, 172);
+  color: rgb(250, 238, 238);
   text-align: center;
   margin-bottom: 30px;
   font-size: 30px;
@@ -309,13 +316,15 @@ h2{
   outline: none;
   border-radius: 20px;
   margin-left: auto;
-  background-color: rgb(223, 211, 195);
+  background-color: #4ECCA3;
   font-size: 20px;
   font-weight: bold;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 button:hover{
-    background-color: rgb(197, 186, 216);
+    background-color: rgb(113, 193, 149);
+    
 }
 .circle{
   position: absolute;

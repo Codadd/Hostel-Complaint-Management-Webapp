@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Axios from "axios";
-
+import "../Styles/MyComplaint.css";
 const MyComplaint = () => {
   const [complaints, setComplaints] = useState([]);
   const userId = localStorage.getItem("userId");
@@ -11,7 +11,7 @@ const MyComplaint = () => {
     } else {
       console.error("User not logged in");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
   // const fetchComplaints = async () => {
@@ -29,7 +29,7 @@ const MyComplaint = () => {
   //     setComplaints([]); // Set to empty array on error
   //   }
   // };
-    
+
   // useEffect(() => {
   //   fetchComplaints();
   // // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,18 +57,18 @@ const MyComplaint = () => {
       )
     );
   };
-   
-    // Submit feedback
-    const handleSubmitFeedback = async (id, feedback) => {
-      try {
-        await Axios.put(`http://localhost:8093/complaints/feedback/${id}`, {
-          feedback: feedback,
-        });
-        fetchUserComplaints(); // Refresh complaints after feedback submission
-      } catch (error) {
-        console.error("Error submitting feedback:", error);
-      }
-    };
+
+  // Submit feedback
+  const handleSubmitFeedback = async (id, feedback) => {
+    try {
+      await Axios.put(`http://localhost:8093/complaints/feedback/${id}`, {
+        feedback: feedback,
+      });
+      fetchUserComplaints(); // Refresh complaints after feedback submission
+    } catch (error) {
+      console.error("Error submitting feedback:", error);
+    }
+  };
 
   return (
     <div className="my-complaints">
@@ -82,7 +82,6 @@ const MyComplaint = () => {
             <th>Status</th>
 
             <th>Feedback</th>
-
           </tr>
         </thead>
         <tbody>
@@ -102,16 +101,25 @@ const MyComplaint = () => {
                       <textarea
                         placeholder="Enter feedback"
                         value={complaint.feedback || ""}
-                        onChange={(e) => handleFeedbackChange(complaint._id, e.target.value)}
-                        />
-                        <button
-                           onClick={()=>handleSubmitFeedback(complaint._id, complaint.feedback)}>
-                            Submit Feedback
-                           </button>
+                        onChange={(e) =>
+                          handleFeedbackChange(complaint._id, e.target.value)
+                        }
+                      />
+                      <button
+                        onClick={() =>
+                          handleSubmitFeedback(
+                            complaint._id,
+                            complaint.feedback
+                          )
+                        }
+                      >
+                        Submit Feedback
+                      </button>
                     </div>
-                  ) : (<span>No feedback yet</span>)}
+                  ) : (
+                    <span>No feedback yet</span>
+                  )}
                 </td>
-
               </tr>
             ))
           ) : (
@@ -124,6 +132,5 @@ const MyComplaint = () => {
     </div>
   );
 };
-
 
 export default MyComplaint;

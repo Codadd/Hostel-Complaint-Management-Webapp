@@ -24,7 +24,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <div className={`arrow ${isOpen ? "left" : "right"}`}></div>
         </button>
         <div className="logo">
-          <h2>{isOpen ? "Hello" : ""}</h2>
+          <h2>{isOpen ? "Hello User" : ""}</h2>
         </div>
       </div>
 

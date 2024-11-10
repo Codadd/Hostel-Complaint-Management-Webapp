@@ -70,13 +70,26 @@ const Signup = () => {
           autoComplete="off"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <input
-          placeholder="Hostel" // New hostel field
-          name="hostel"
+        {/* Hostel Dropdown */}
+        {/* <label htmlFor="hostel">Select Hostel:</label> */}
+        <select
+          id="hostel"
           value={hostel}
-          onChange={(e) => setHostel(e.target.value)} // Set hostel state
-          required // Make hostel input required
-        />
+          onChange={(e) => setHostel(e.target.value)} // Update state when a hostel is selected
+        >
+          <option value="">Select a hostel</option>
+          <option value="KNGH">KNGH</option>
+          <option value="DJGH">DJGH</option>
+          <option value="PATEL">PATEL</option>
+          <option value="NBH">NBH</option>
+          <option value="SVH">SVH</option>
+          <option value="MALVIYA">MALVIYA</option>
+          <option value="TILAK">TILAK</option>
+          <option value="TANDON">TANDON</option>
+          <option value="IHB">IHB</option>
+          <option value="SNGH">SNGH</option>
+          <option value="TAGORE">TAGORE</option>
+        </select>
         <button className="my-btn" type="submit">
           Sign Up
         </button>

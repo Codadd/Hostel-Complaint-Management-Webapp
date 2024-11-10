@@ -17,7 +17,8 @@
     position: relative;
     text-align: center;
     font-size: 5vw;
-    color: linear-gradient(to top, #230d9128 0%, #9491b8c6 100%);
+    /* color: linear-gradient(to top, #ffffff 0%, #9491b8c6 100%); */
+    color: azure;
     margin-top: 1.5em;
     /* -webkit-text-stroke: 0.3vw rgb(170, 170, 204);
     text-transform: uppercase; */
@@ -37,6 +38,7 @@
     margin-top: 1em;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
+    color: blanchedalmond;
   }
 .header {
     text-align: center;

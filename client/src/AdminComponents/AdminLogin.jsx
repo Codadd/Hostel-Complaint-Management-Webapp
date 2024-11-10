@@ -50,7 +50,7 @@ const AdminLogin = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         {/* Hostel Dropdown */}
-        <label htmlFor="hostel">Select Hostel:</label>
+        {/* <label htmlFor="hostel">Select Hostel:</label> */}
         <select
           id="hostel"
           value={hostel}
