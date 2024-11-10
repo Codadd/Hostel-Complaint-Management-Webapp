@@ -2,38 +2,17 @@ import express from "express";
 import nodemailer from "nodemailer";
 import Complaint from "../models/Complaint.js";
 
+
 const router = express.Router();
 
-// Update complaint status and response
-router.put("/admincomplaint/update/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { status, response } = req.body;
 
-    // Logic to find and update the complaint by ID
-    const updatedComplaint = await Complaint.findByIdAndUpdate(
-      id,
-      { status, response },
-      { new: true }
-    );
-
-    if (!updatedComplaint) {
-      return res.status(404).json({ error: "Complaint not found" });
-    }
-
-    res.status(200).json(updatedComplaint);
-  } catch (error) {
-    res.status(500).json({ error: "Failed to update complaint" });
-  }
-});
-
-// Get all complaints with optional filters
-router.get("/admincomplaint/all", async (req, res) => {
+// Fetch all complaints with optional filters for the admin dashboard
+router.get("/all", async (req, res) => {
   const { status, category } = req.query;
   let filter = {};
 
   if (status) filter.status = status;
-  if (category) filter.issueType = category; // assuming "issueType" is the category field
+  if (category) filter.issueType = category;
 
   try {
     const complaints = await Complaint.find(filter);
@@ -44,20 +23,109 @@ router.get("/admincomplaint/all", async (req, res) => {
   }
 });
 
+// Update a complaint's status and admin response
+// Update a complaint's status and send email
+router.put("/update/:id", async (req, res) => {
+  const { id } = req.params;
+  const { status, adminResponse } = req.body;
+
+  // try {
+  //   const updatedComplaint = await Complaint.findByIdAndUpdate(
+  //     id,
+  //     { status, adminResponse, updatedAt: Date.now() },
+  //     { new: true }
+  //   );
+  //   res.status(200).json(updatedComplaint);
+  // } catch (error) {
+  //   console.error("Error updating complaint:", error);
+  //   res.status(500).json({ message: "Error updating complaint" });
+  // }
+
+  try{
+    const complaint = await Complaint.findById(id);
+
+    if(!complaint){
+       return res.status(404).json({message: "complaint not found"});
+    }
+    complaint.status = status;
+    complaint.adminResponse = adminResponse;
+    complaint.updatedAt = Date.now();
+
+    const updatedComplaint = await complaint.save();
+
+    if(!complaint.isAnonymous && complaint.email){
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user:process.env.EMAIL_USER,
+          pass:process.env.EMAIL_PASS,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: complaint.email,
+        subject: `Complaint Status updated: ${complaint.issueType}`,
+        text:`Hello ${complaint.userName},\n\nYour complaint regarding "${complaint.issueType}" has been updated.\n\nNew status: ${status}\n\nAdmin Response: ${adminResponse}\n\nThank you,\nHostel Management`,
+      };
+      try{
+        await transporter.sendMail(mailOptions);
+      }catch(emailError){
+        console.error("Error sending email:",emailError);
+        return res.status(500).json({
+          message:"Complaint updated, but failed to send status update email",
+        });
+      }
+    }
+    res.status(200).json(updatedComplaint);
+  }catch(error)
+  {
+    console.error("Error updating complaint:",error);
+    res.status(500).json({ message: "Error updating complaint" });
+  }
+});
+
+
 // Get complaints for the logged-in user
 router.get("/mycomplaint", async (req, res) => {
   const userId = req.headers.userid; // Extract userId from headers
-  console.log("Fetching complaints for User ID:", userId); // Log the user ID
+  console.log("Fetching complaints for User ID:", userId);
 
   try {
-    const complaints = await Complaint.find({ userId }); // Query by userId
-    console.log("Found complaints:", complaints); // Log the fetched complaints
-    res.status(200).json({ complaints }); // Send back the complaints
+    const complaints = await Complaint.find({ userId });
+    console.log("Found complaints:", complaints);
+    res.status(200).json({ complaints });
   } catch (error) {
     console.error("Error fetching complaints:", error);
     res.status(500).json({ error: "Failed to fetch complaints" });
   }
 });
+
+
+// Route to submit feedback for a specific complaint
+router.put("/feedback/:id", async (req, res) => {
+  try {
+    const { feedback } = req.body;
+    const { id } = req.params;
+
+    // Update complaint with feedback
+    const updatedComplaint = await Complaint.findByIdAndUpdate(
+      id,
+      { feedback },
+      { new: true }
+    );
+
+    if (!updatedComplaint) {
+      return res.status(404).json({ message: "Complaint not found" });
+    }
+
+    res.json({ message: "Feedback submitted successfully", complaint: updatedComplaint });
+  } catch (error) {
+    console.error("Error submitting feedback:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 // POST route to register a complaint
 router.post("/registercomplaint", async (req, res) => {
@@ -70,14 +138,14 @@ router.post("/registercomplaint", async (req, res) => {
       roomNumber,
       email,
       userName,
-    } = req.body; // Include email and userName from request body
+    } = req.body;
 
-    // Create a complaint object
     const complaintData = {
       userId,
       issueType,
       description,
       isAnonymous,
+      email, //Add email to the saved data
     };
 
     // Include userName and roomNumber only if the complaint is not anonymous

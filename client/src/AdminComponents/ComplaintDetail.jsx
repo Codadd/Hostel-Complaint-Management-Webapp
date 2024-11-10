@@ -1,6 +1,7 @@
 // src/AdminComponents/ComplaintDetail.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import Axios from "axios";
+
 
 const ComplaintDetail = ({ complaint }) => {
   const [status, setStatus] = useState(complaint.status);
@@ -11,7 +12,9 @@ const ComplaintDetail = ({ complaint }) => {
       status,
       adminResponse,
     })
-      .then(() => alert("Complaint updated successfully"))
+      .then(() => {
+        alert("Complaint updated successfully");
+        })
       .catch((error) => console.error("Error updating complaint:", error));
   };
 

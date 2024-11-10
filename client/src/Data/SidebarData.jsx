@@ -3,6 +3,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import InfoIcon from "@mui/icons-material/Info";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LogoutIcon from "@mui/icons-material/Logout";
+
 export const SidebarData = [
   {
     title: "MyComplaint",
@@ -28,6 +29,6 @@ export const SidebarData = [
   {
     title: "LogOut",
     icon: <LogoutIcon />,
-    path: "/login",
+    isLogout: true,
   },
 ];

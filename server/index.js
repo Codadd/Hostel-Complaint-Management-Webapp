@@ -6,7 +6,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { UserRouter } from "./routes/user.js";
 import complaintRoutes from "./routes/complaints.js";
+
+import adminComplaintRoutes from "./routes/admincomplaint.js";
+
 import adminRoutes from "./routes/admincomplaint.js";
+
+
 
 dotenv.config();
 const PORT = 8093;
@@ -24,15 +29,21 @@ app.use(cookieParser());
 
 // Connect to the `hostelmanagement` database
 mongoose
-  .connect("mongodb+srv://shrestha:sh1234@cluster1.vq23j.mongodb.net/")
+  .connect("mongodb://localhost:27017/hostelmanagement")
   .then(() => console.log("Connected to hostelmanagement database"))
   .catch((error) => console.error("Database connection error:", error));
 
 // Set up routes
 app.use("/auth", UserRouter);
 app.use("/api", complaintRoutes);
+
 app.use("/complaints", complaintRoutes);
+app.use("/api", adminRoutes);
 app.use("/admincomplaint", adminRoutes);
+
+// app.use("/api/complaints", complaintRoutes);
+app.use("/admincomplaint", adminComplaintRoutes); // Admin-specific complaint routes
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

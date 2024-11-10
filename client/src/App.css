@@ -24,6 +24,165 @@ body{
   animation: gradient 15s ease infinite;
   /* background-attachment: fixed; */
 }
+/* Reset default margins and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Fullscreen Dark Theme Background */
+html, body {
+  font-family: Arial, sans-serif;
+  background-color: #1e1e2f; /* Dark background color */
+  color: #dcdcdc;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Prevents scrollbars on body */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CSS to position the logout button to the right */
+.logout-container {
+  display: flex;
+  justify-content: flex-end; /* Align the logout button to the right */
+  margin-bottom: 10px; /* Optional: Add some spacing between the button and the rest of the content */
+}
+
+.logout-btn {
+  background-color: #ff4d4d;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-btn:hover {
+  background-color: #ff1a1a;
+}
+
+/* Admin Dashboard Container */
+.admin-dashboard {
+  width: 100vw;
+  height: 100vh;
+  padding: 20px;
+  background: #2a2a3d; /* Slightly lighter shade for the dashboard panel */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+}
+
+/* Title Styling */
+.admin-dashboard h1 {
+  font-size: 26px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Filters Section */
+.filters {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 20px;
+  background: #3a3a4d;
+  border-radius: 8px;
+}
+
+.filters label {
+  font-weight: 600;
+  color: #a0a0b0;
+}
+
+.filters select, .filters button {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #5a5a6d;
+  background: #4a4a5d;
+  color: #dcdcdc;
+}
+
+/* Updated Button Style */
+.filters button {
+  background: #5c6bc0; /* Softer, muted shade of indigo */
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.filters button:hover {
+  background: #3f51b5; /* Slightly darker shade on hover */
+}
+
+/* Complaints Table */
+.complaints-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.complaints-table th, .complaints-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #444455;
+}
+
+.complaints-table th {
+  background: #3b3b5d;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.complaints-table td {
+  color: #dcdcdc;
+}
+
+.complaints-table tr:nth-child(even) {
+  background: #2e2e46;
+}
+
+.complaints-table tr:hover {
+  background: #393956;
+}
+
+/* Status Dropdown */
+.complaints-table select {
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #5a5a6d;
+  background: #4a4a5d;
+  color: #dcdcdc;
+}
+
+/* Action Button */
+.complaints-table button {
+  padding: 6px 12px;
+  color: #ffffff;
+  background: #10b981;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.3s;
+}
+
+.complaints-table button:hover {
+  background: #059669;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .admin-dashboard h1 {
+    font-size: 20px;
+  }
+}
 
 .container{
   width: 300px;
@@ -141,6 +300,5 @@ button:hover{
     transform: scale(0.8);
   }
 }
-
 
 
