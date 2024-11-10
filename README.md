@@ -9,14 +9,12 @@ A web-based complaint management system designed to help hostel residents regist
 - [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
-- [Usage](#usage)
 - [API Endpoints](#api-endpoints)
    -[User Route](#user-route)
    -[Admin Route](#admin-route)
    -[Feedback Route](#feedback-route) 
 - [Feedback System](#feedback-system)
 - [Usage](#Usage)
-- [License](#license)
 
 ## Features 
 
@@ -76,7 +74,7 @@ git clone https://github.com/your-username/hostel-complaint-management-system.gi
 
 > npm start
 
-- #### 3) Frontend Setup:
+ #### 3) Frontend Setup:
 
 - ##### Navigate to the client folder
 
@@ -98,6 +96,40 @@ git clone https://github.com/your-username/hostel-complaint-management-system.gi
 - PORT=5000
 - EMAIL_USER=<your-email@example.com>
 - EMAIL_PASS=<your-email-password>
+
+## API Endpoint
+
+### User Routes
+
+- POST /api/complaints/registercomplaint - Register a complaint.
+- GET /api/complaints/mycomplaint - View complaints registered by the logged-in user.
+
+### Admin Routes
+
+- GET /api/complaints/all - Get all complaints with optional filters.
+- PUT /api/complaints/update/:id - Update complaint status and response.
+
+### Feedback Routes
+
+- POST /api/feedback/submit - Submit feedback for a resolved complaint.
+
+## Feedback System
+
+Once a complaint is resolved, a feedback form becomes available for the user to provide a rating and comments.
+
+- 1) Frontend: A feedback form is shown, allowing the user to rate and add comments.
+- 2) Backend: Submitted feedback is saved in a Feedback collection with fields like complaintId, rating, feedbackText, and userId.
+- 3) Admin Review: Admins can review feedback associated with each complaint.
+
+## Usage
+- 1) User Registration and Login:
+     - Users can sign up and log in to register complaints.
+- 2) Complaint Submission:
+     - Users fill out the complaint form, selecting the type of issue, description, and room number (optional if anonymous).
+- 3) Complaint Management:
+     - Admins manage complaints, update statuses, and add responses.
+- 4) Feedback:
+     - After a complaint is resolved, users can submit feedback, which is saved to the database and viewable by the admin.
 
 
 
