@@ -8,6 +8,7 @@ const Signup = () => {
   const [userId, setUserId] = useState(""); // State for user ID
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [hostel, setHostel] = useState(""); // State for hostel
   const [popupMessage, setPopupMessage] = useState(""); // State for popup message
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -17,6 +18,7 @@ const Signup = () => {
       email,
       password,
       userId,
+      hostel,
     })
       .then((response) => {
         if (response.data && response.data.status) {
@@ -67,6 +69,13 @@ const Signup = () => {
           name="password"
           autoComplete="off"
           onChange={(e) => setPassword(e.target.value)}
+        />
+        <input
+          placeholder="Hostel" // New hostel field
+          name="hostel"
+          value={hostel}
+          onChange={(e) => setHostel(e.target.value)} // Set hostel state
+          required // Make hostel input required
         />
         <button className="my-btn" type="submit">
           Sign Up

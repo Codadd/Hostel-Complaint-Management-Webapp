@@ -8,18 +8,23 @@ const AdminDashboard = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const navigate = useNavigate();
-
-  // Fetch complaints when the component is loaded
+  const hostel = localStorage.getItem("hostel"); // Get the hostel from localStorage
   useEffect(() => {
     fetchComplaints();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter, categoryFilter]);
 
-  // Fetch complaints based on filters
   const fetchComplaints = async () => {
+    const hostel = localStorage.getItem("hostel"); // Get the hostel from localStorage
+
     try {
       const response = await Axios.get("http://localhost:8093/complaints/all", {
-        params: { status: statusFilter, category: categoryFilter },
+        headers: {
+          hostel: hostel, // Send the hostel value as a header
+        },
+        params: {
+          status: statusFilter,
+          category: categoryFilter,
+        },
       });
       setComplaints(response.data);
     } catch (error) {
@@ -27,13 +32,12 @@ const AdminDashboard = () => {
     }
   };
 
-  // Update complaint status and response
   const handleUpdateStatus = async (id, newStatus, responseText) => {
     try {
-      const result = await Axios.put(
-        `http://localhost:8093/complaints/update/${id}`,
-        { status: newStatus, adminResponse: responseText }
-      );
+      await Axios.put(`http://localhost:8093/complaints/update/${id}`, {
+        status: newStatus,
+        adminResponse: responseText,
+      });
       setComplaints((prevComplaints) =>
         prevComplaints.map((complaint) =>
           complaint._id === id
@@ -46,12 +50,11 @@ const AdminDashboard = () => {
     }
   };
 
-  //Handle Logout
   const handleLogout = () => {
-    localStorage.removeItem("adminId");// Use "adminId" instead of "adminToken"
-    sessionStorage.removeItem("adminId");// Also clear from session storage, if used
-    navigate("/");// Redirect to main page
-  }
+    localStorage.removeItem("adminId");
+    localStorage.removeItem("hostel"); // Remove hostel info on logout
+    navigate("/");
+  };
 
   return (
     <div className="admin-dashboard">
@@ -91,9 +94,7 @@ const AdminDashboard = () => {
           <option value="electricity">Electricity</option>
         </select>
 
-        <button className="apply-filter-btn">
-          Apply Filters
-        </button>
+        <button className="apply-filter-btn">Apply Filters</button>
       </div>
 
       {/* Complaints Table */}
@@ -108,7 +109,7 @@ const AdminDashboard = () => {
               <th>Status</th>
               <th>Response</th>
               <th>Actions</th>
-              <th>Feedback</th>{/*New column for feedback*/}
+              <th>Feedback</th>
             </tr>
           </thead>
           <tbody>
@@ -150,16 +151,16 @@ const AdminDashboard = () => {
                       Mark as Resolved
                     </button>
                   </td>
-                   {/* Display feedback for resolved complaints*/}
-                   <td>
+                  <td>
                     {complaint.status === "resolved"
-                      ? complaint.feedback || "No feedback provided" : "N/A"}
-                   </td>
+                      ? complaint.feedback || "No feedback provided"
+                      : "N/A"}
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7">No complaints found.</td>
+                <td colSpan="8">No complaints found.</td>
               </tr>
             )}
           </tbody>

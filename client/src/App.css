@@ -8,6 +8,95 @@
 
 }
 
+/* Input fields styling */
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+/* Dropdown Styling */
+select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Hover effect on dropdown */
+select:hover {
+  border-color: #888;
+}
+
+.my-btn {
+  padding: 12px 20px; /* Add some padding to make the button bigger */
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%; /* Let the button size adjust to its content */
+  display: inline-block; /* Ensures it adapts to the content */
+  max-width: 250px; 
+  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden; /* Ensures no overflow */
+  text-overflow: ellipsis; /* Adds ellipsis if the text overflows */
+  text-align: center; /* Center the text inside the button */
+}
+
+.my-btn:hover {
+  background-color: #333061;
+}
+
+/* Add media query for smaller screen sizes */
+@media (max-width: 600px) {
+  .my-btn {
+    font-size: 14px; /* Reduce font size on smaller screens */
+    padding: 10px; /* Adjust padding to make it more compact */
+  }
+}
+
+
+
+/* Error message Styling */
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Label styling */
+label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  color: #333;
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+  .container {
+    width: 90%;
+  }
+
+  input,
+  select,
+  .my-btn {
+    font-size: 14px;
+  }
+}
 body{
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   background: linear-gradient(to top, #190649b3 0%, #251f7481 100%);
@@ -65,10 +154,6 @@ html, body {
   background-color: #ff1a1a;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 80a1a73b55c5e6608e19bc3b3cda90f4a34ddaee
 /* Admin Dashboard Container */
 .admin-dashboard {
   width: 100vw;
@@ -78,7 +163,10 @@ html, body {
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
   overflow-y: auto;
 }
-
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 /* Title Styling */
 .admin-dashboard h1 {
   font-size: 26px;

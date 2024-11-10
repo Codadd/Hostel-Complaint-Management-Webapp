@@ -9,6 +9,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const handleLogout = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
+    localStorage.removeItem("hostel");
     navigate("/mainpage");
   };
 
@@ -32,16 +33,17 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <ul>
             {SidebarData.map((item, index) => (
               <li key={index}>
-                {item.isLogout? (
+                {item.isLogout ? (
                   <button onClick={handleLogout} className="logout-btn">
                     {item.icon}
                     {item.title}
                   </button>
-                ): (
-                <Link to={item.path}>
-                  {item.icon}
-                  {item.title}
-                </Link>)}
+                ) : (
+                  <Link to={item.path}>
+                    {item.icon}
+                    {item.title}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
