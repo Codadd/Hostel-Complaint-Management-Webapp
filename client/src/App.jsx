@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Signup from "./Components/Signup";
@@ -31,8 +30,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* Main Page as Default Landing Route */}
-          <Route path="/mainpage" element={<MainPage />} /> 
-
+          <Route path="/" element={<MainPage />} />
           {/* Public Routes */}
           <Route path="/signup" element={<Signup />} /> {/* User Signup */}
           <Route path="/login" element={<Login />} /> {/* User Login */}
@@ -40,13 +38,11 @@ function App() {
           <Route path="/resetPassword/:token" element={<ResetPassword />} />
           <Route path="/adminlogin" element={<AdminLogin />} />
           <Route path="/adminsignup" element={<AdminSignup />} />
-
           {/* Protected Routes */}
           <Route path="/admindashboard" element={<AdminDashboard />} />
           <Route path="/complaints-graph" element={<ComplaintsGraph />} />
-          
           <Route
-            path="/"
+            path="/home"
             element={
               <ProtectedRoute>
                 <Home />
@@ -85,7 +81,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
           {/* Redirect all other paths to MainPage on initial load */}
           <Route path="*" element={<Navigate to="/mainpage" />} />
         </Routes>

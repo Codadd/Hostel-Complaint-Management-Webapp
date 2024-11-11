@@ -19,19 +19,23 @@ const Login = () => {
       alert("Please fill in all the fields (User ID, Password, Hostel).");
       return; // Prevent form submission if fields are empty
     }
-   
+
     Axios.post("http://localhost:8093/auth/login", {
       userId,
       password,
-      hostel//hostel
+      hostel, //hostel
     })
       .then((response) => {
         if (response.data && /*response.data.userId*/ response.data.status) {
           localStorage.setItem("userId", response.data.userId);
           localStorage.setItem("hostel", response.data.hostel); // Store hostel information
 
-          console.log("User ID saved to local storage:", response.data.userId,response.data.hostel);
-          navigate("/");
+          console.log(
+            "User ID saved to local storage:",
+            response.data.userId,
+            response.data.hostel
+          );
+          navigate("/home");
         }
       })
       .catch((err) => {

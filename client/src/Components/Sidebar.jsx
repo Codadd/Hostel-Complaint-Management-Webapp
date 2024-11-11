@@ -10,9 +10,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
 
-    localStorage.removeItem("hostel");//hostel
+    localStorage.removeItem("hostel"); //hostel
 
-    navigate("/mainpage");
+    navigate("/");
   };
 
   return (
@@ -25,9 +25,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <button className="toggle-btn" onClick={toggleSidebar}>
           <div className={`arrow ${isOpen ? "left" : "right"}`}></div>
         </button>
-        <div className="logo">
+        {/* <div className="logo">
           <h2>{isOpen ? "Hello User" : ""}</h2>
-        </div>
+        </div> */}
       </div>
 
       {isOpen && (
