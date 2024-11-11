@@ -9,7 +9,7 @@ router.get("/graph-data", async (req, res) => {
     const data = await Complaint.aggregate([
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%dT%H:%M:%S", date: "$createdAt" } }, // Group by date
+          _id: { $dateToString: { format: "%Y-%m-%dT%H:%M", date: "$createdAt" } }, // Group by date
           count: { $sum: 1 }, // Count total complaints per day
         },
       },
@@ -22,7 +22,7 @@ router.get("/graph-data", async (req, res) => {
      // Convert to UTC+5:30 time zone
     const formattedComplaints = data.map(complaint => ({
       ...complaint,
-      _id: moment.tz(complaint._id, 'UTC').tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm:ss'),
+      _id: moment.tz(complaint._id, 'UTC').tz('Asia/Kolkata').format('YYYY-MM-DD HH:mm'),
     }));
     console.log("Formatted data with Kolkata time:", formattedComplaints); 
     res.json(formattedComplaints);
