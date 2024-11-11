@@ -7,18 +7,7 @@ const router = express.Router();
 // Fetch all complaints with optional filters for the admin dashboard
 router.get("/all", async (req, res) => {
   const { status, category } = req.query;
-<<<<<<< HEAD
-
-  const hostel = req.headers.hostel; //fetch hostel
-
-  if(!hostel){
-    return res.status(400).json({ error: "Hostel not provided" });
-  }
-
-  let filter = {hostel};
-=======
   const hostel = req.headers.hostel; // Fetch the hostel from the request header (sent by frontend)
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
   if (!hostel) {
     return res.status(400).json({ error: "Hostel not provided" });
@@ -45,11 +34,7 @@ router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
   const { status, adminResponse } = req.body;
 
-<<<<<<< HEAD
-  try{
-=======
   try {
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     const complaint = await Complaint.findById(id);
 
     if (!complaint) {
@@ -90,13 +75,8 @@ router.put("/update/:id", async (req, res) => {
       }
     }
 
-<<<<<<< HEAD
-     // Send update email for anonymous complaints (if email is provided)
-     if (complaint.isAnonymous && complaint.email) {
-=======
     // Send update email for anonymous complaints (if email is provided)
     if (complaint.isAnonymous && complaint.email) {
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -122,10 +102,6 @@ router.put("/update/:id", async (req, res) => {
         });
       }
     }
-<<<<<<< HEAD
-   
-=======
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
     res.status(200).json(updatedComplaint);
   } catch (error) {
@@ -185,34 +161,21 @@ router.post("/registercomplaint", async (req, res) => {
       isAnonymous,
       roomNumber,
       email,
-<<<<<<< HEAD
-      hostel,//hostel
-=======
       hostel, // Ensure hostel is coming from req.body
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       userName,
     } = req.body;
 
     if (!hostel) {
       return res.status(400).json({ message: "Hostel is required." });
     }
-<<<<<<< HEAD
-   
-=======
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
     const complaintData = {
       userId,
       issueType,
       description,
       isAnonymous,
-<<<<<<< HEAD
-      hostel, //include hostel
-      email, //Add email to the saved data
-=======
       hostel, // Include hostel in complaint data
       email,
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     };
 
     // Include userName and roomNumber only if the complaint is not anonymous
@@ -265,19 +228,6 @@ router.post("/registercomplaint", async (req, res) => {
         },
       });
 
-<<<<<<< HEAD
-    //If complaint is anonymous and email is provided, you may want to send a generic confirmation email.
-    if (isAnonymous && email) {
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASS,
-        },
-      });
-
-=======
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
@@ -295,10 +245,6 @@ router.post("/registercomplaint", async (req, res) => {
         });
       }
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     res.status(201).json({ message: "Complaint registered successfully" });
   } catch (error) {
     console.error("Error registering complaint:", error);

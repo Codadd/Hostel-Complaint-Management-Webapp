@@ -10,10 +10,7 @@ import complaintRoutes from "./routes/complaints.js";
 import adminComplaintRoutes from "./routes/admincomplaint.js";
 
 import adminRoutes from "./routes/admincomplaint.js";
-<<<<<<< HEAD
 import graphRoutes from "./routes/graph.js";
-=======
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
 dotenv.config();
 const PORT = 8093;
@@ -31,7 +28,7 @@ app.use(cookieParser());
 
 // Connect to the `hostelmanagement` database
 mongoose
-  .connect("mongodb+srv://aditisonkar2409:1234@cluster4.due5n.mongodb.net/")
+  .connect("mongodb://localhost:27017/hostelmanagement")
   .then(() => console.log("Connected to hostelmanagement database"))
   .catch((error) => console.error("Database connection error:", error));
 

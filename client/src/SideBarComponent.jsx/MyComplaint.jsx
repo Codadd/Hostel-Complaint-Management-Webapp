@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import Axios from "axios";
 import "../Styles/MyComplaint.css";
-<<<<<<< HEAD
-
-=======
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 const MyComplaint = () => {
   const [complaints, setComplaints] = useState([]);
   const userId = localStorage.getItem("userId");

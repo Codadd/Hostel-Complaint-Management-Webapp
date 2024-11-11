@@ -8,13 +8,8 @@ const complaintSchema = new mongoose.Schema(
     issueType: { type: String, required: true },
     description: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
-<<<<<<< HEAD
     email: {type: String, required: true},
     hostel: {type: String, required: true},//hostel
-=======
-    email: { type: String, required: true },
-    hostel: { type: String, required: true },
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     isAnonymous: { type: Boolean, default: false },
     status: {
       type: String,

@@ -8,11 +8,7 @@ const router = express.Router();
 
 // Signup Route
 router.post("/signup", async (req, res) => {
-<<<<<<< HEAD
   const { username, email, password, userId, hostel} = req.body;
-=======
-  const { username, email, password, userId, hostel } = req.body;
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
   const user = await User.findOne({ userId });
   if (user) {
     return res
@@ -20,17 +16,7 @@ router.post("/signup", async (req, res) => {
       .json({ status: false, message: "User already exists" });
   }
   const hashpassword = await bcrypt.hash(password, 10);
-<<<<<<< HEAD
   const newUser = new User({ userId, username, hostel,email, password: hashpassword });
-=======
-  const newUser = new User({
-    userId,
-    username,
-    hostel,
-    email,
-    password: hashpassword,
-  });
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
   await newUser.save();
   return res.status(201).json({ status: true, message: "Record registered" });
@@ -65,7 +51,6 @@ router.post("/login", async (req, res) => {
         .status(401)
         .json({ status: false, message: "Password is incorrect" });
     }
-<<<<<<< HEAD
 
    // Optionally validate the hostel (if you want to check if the provided hostel matches the saved hostel)
    if (hostel && hostel !== user.hostel) {
@@ -76,15 +61,6 @@ router.post("/login", async (req, res) => {
   }
 
 
-=======
-    // Optionally validate the hostel (if you want to check if the provided hostel matches the saved hostel)
-    if (hostel && hostel !== user.hostel) {
-      return res.status(400).json({
-        status: false,
-        message: "Hostel does not match the registered hostel",
-      });
-    }
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     // Create a JWT token if login is successful
     const token = jwt.sign({ userId: user.userId }, process.env.KEY, {
       expiresIn: "1h",

@@ -5,13 +5,9 @@ import "../App.css"; // Ensure your styling file exists
 const AdminLogin = () => {
   const [adminId, setAdminId] = useState("");
   const [password, setPassword] = useState("");
-<<<<<<< HEAD
  
   const [hostel, setHostel] = useState(""); // New hostel field
 
-=======
-  const [hostel, setHostel] = useState(""); // New hostel field
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -30,13 +26,9 @@ const AdminLogin = () => {
       password === predefinedAdminCredentials.password
     ) {
       localStorage.setItem("adminId", adminId); // Optionally store admin ID
-<<<<<<< HEAD
 
       localStorage.setItem("hostel", hostel); // Store hostel in localStorage
 
-=======
-      localStorage.setItem("hostel", hostel); // Store hostel in localStorage
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       setError(""); // Clear any previous error
       console.log("Admin login successful"); // Success message
       navigate("/admindashboard"); // Redirect to admin dashboard
@@ -61,10 +53,6 @@ const AdminLogin = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-<<<<<<< HEAD
-
-=======
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
         {/* Hostel Dropdown */}
         {/* <label htmlFor="hostel">Select Hostel:</label> */}
         <select
@@ -85,10 +73,6 @@ const AdminLogin = () => {
           <option value="SNGH">SNGH</option>
           <option value="TAGORE">TAGORE</option>
         </select>
-<<<<<<< HEAD
-
-=======
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
         <button className="my-btn" type="submit">
           Login
         </button>

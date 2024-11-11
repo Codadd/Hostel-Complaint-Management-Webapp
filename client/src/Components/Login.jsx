@@ -6,29 +6,19 @@ import "../App.css"; // Make sure this file exists
 const Login = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-<<<<<<< HEAD
 
   const [hostel, setHostel] = useState(""); // state for hostel
 
-=======
-  const [hostel, setHostel] = useState(""); // state for hostel
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
   const navigate = useNavigate();
 
   Axios.defaults.withCredentials = true;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-
-=======
-    // Check if fields are empty and show a popup if necessary
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     if (!userId || !password || !hostel) {
       alert("Please fill in all the fields (User ID, Password, Hostel).");
       return; // Prevent form submission if fields are empty
     }
-<<<<<<< HEAD
    
     Axios.post("http://localhost:8093/auth/login", {
       userId,
@@ -42,27 +32,6 @@ const Login = () => {
 
           console.log("User ID saved to local storage:", response.data.userId,response.data.hostel);
           navigate("/");
-=======
-    Axios.post("http://localhost:8093/auth/login", {
-      userId,
-      password,
-      hostel,
-    })
-      .then((response) => {
-        if (response.data && response.data.status) {
-          // Store userId and hostel in localStorage upon successful login
-          localStorage.setItem("userId", response.data.userId);
-          localStorage.setItem("hostel", response.data.hostel); // Store hostel information
-
-          console.log(
-            "User ID and Hostel saved to local storage:",
-            response.data.userId,
-            response.data.hostel
-          );
-          navigate("/"); // Redirect to home page after successful login
-        } else {
-          console.log("Login failed:", response.data.message);
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
         }
       })
       .catch((err) => {
@@ -110,11 +79,7 @@ const Login = () => {
         </button>
         <Link to="/forgotPassword">Forgot Password</Link>
         <p>
-<<<<<<< HEAD
           Don&apos;t Have Account? <Link to="/signup">Signup</Link>
-=======
-          Don't Have an Account? <Link to="/signup">Sign Up</Link>
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
         </p>
       </form>
     </div>

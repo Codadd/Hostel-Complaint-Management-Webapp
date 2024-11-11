@@ -18,7 +18,6 @@ const RegisterComplaint = () => {
     e.preventDefault();
 
     const userId = localStorage.getItem("userId");
-<<<<<<< HEAD
     //hostel
     const hostel = localStorage.getItem("hostel");
 
@@ -28,15 +27,6 @@ const RegisterComplaint = () => {
     // Check for userId availability
     if (!userId || !hostel ) {
       toast.error("User ID not found. Please log in again.");
-=======
-    const hostel = localStorage.getItem("hostel");
-
-    console.log("User ID:", userId); // Check if this is correct
-    console.log("Hostel ID:", hostel); // Check if this is correct
-
-    if (!userId || !hostel) {
-      toast.error("Required data missing. Please log in again.");
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       return;
     }
 

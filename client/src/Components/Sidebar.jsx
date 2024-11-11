@@ -9,13 +9,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   const handleLogout = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
-<<<<<<< HEAD
 
     localStorage.removeItem("hostel");//hostel
 
-=======
-    localStorage.removeItem("hostel");
->>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     navigate("/mainpage");
   };
 
