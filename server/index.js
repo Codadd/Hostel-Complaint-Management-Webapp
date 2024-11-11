@@ -10,8 +10,7 @@ import complaintRoutes from "./routes/complaints.js";
 import adminComplaintRoutes from "./routes/admincomplaint.js";
 
 import adminRoutes from "./routes/admincomplaint.js";
-
-
+import graphRoutes from "./routes/graph.js";
 
 dotenv.config();
 const PORT = 8093;
@@ -43,6 +42,7 @@ app.use("/admincomplaint", adminRoutes);
 
 // app.use("/api/complaints", complaintRoutes);
 app.use("/admincomplaint", adminComplaintRoutes); // Admin-specific complaint routes
+app.use("/complaints", graphRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

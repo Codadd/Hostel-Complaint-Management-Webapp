@@ -9,7 +9,7 @@
 .sidebar-header{
     display: flex;
     align-items: center;
-    background-color: rgb(165, 163, 207);
+    background-color: var(--highlight-color);
     justify-content: space-between;
     padding: 10px;
 }
@@ -42,10 +42,12 @@
 }
 .logo h2{
     font-family: sans-serif;
-    font-weight: 700;
-    font-size: 18;
+    font-weight: 500;
+    font-size: 15;
     color: azure;
-    margin: 0;
+    margin: 10;
+    text-align: center;
+    
 }
 .nav-menu ul{
     list-style-type: none;

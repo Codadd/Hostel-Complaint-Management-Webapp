@@ -1,7 +1,8 @@
 // MainPage.js
-import React from "react";
+//import React from "react";
 import { useNavigate } from "react-router-dom";
-//import "./MainPage.css"; // Optional: Add any custom styles you need
+import "../Styles/MainPage.css"; // Optional: Add any custom styles you need
+
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -16,14 +17,21 @@ const MainPage = () => {
 
   return (
     <div className="main-page">
-      <h1>Welcome! Please select your role to log in:</h1>
-      <div className="role-buttons">
-        <button onClick={handleUserLogin} className="btn btn-primary">
-          Login as User
-        </button>
-        <button onClick={handleAdminLogin} className="btn btn-secondary">
-          Login as Admin
-        </button>
+      <h1>
+        Welcome to{" "}
+        <span className="highlight">Hostel Complaint Management System</span>
+      </h1>
+      {/* Box Container */}
+      <div className="login-box">
+        <h2>Please select your role to log in:</h2>
+        <div className="role-buttons">
+          <button onClick={handleUserLogin} className="btn btn-primary">
+            Login as User
+          </button>
+          <button onClick={handleAdminLogin} className="btn btn-secondary">
+            Login as Admin
+          </button>
+        </div>
       </div>
     </div>
   );

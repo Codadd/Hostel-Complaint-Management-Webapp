@@ -57,11 +57,7 @@
   }
   
   .complaints-table th {
-<<<<<<< HEAD
     background-color: black;
-=======
-    background-color: #f4f4f4;
->>>>>>> 80a1a73b55c5e6608e19bc3b3cda90f4a34ddaee
     font-weight: bold;
   }
   
@@ -101,3 +97,22 @@
     }
   }
   
+  /* Example of button styling in AdminDashboard.css */
+.graph-btn-container {
+  margin-top: 20px;
+}
+
+.graph-btn-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin-right:500px;
+  border: none;
+  cursor: pointer;
+}
+
+.graph-btn-container .btn:hover {
+  background-color: #45a049;
+}
+
+

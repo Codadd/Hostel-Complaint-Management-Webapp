@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Signup Route
 router.post("/signup", async (req, res) => {
-  const { username, email, password, userId } = req.body;
+  const { username, email, password, userId, hostel} = req.body;
   const user = await User.findOne({ userId });
   if (user) {
     return res
@@ -16,7 +16,7 @@ router.post("/signup", async (req, res) => {
       .json({ status: false, message: "User already exists" });
   }
   const hashpassword = await bcrypt.hash(password, 10);
-  const newUser = new User({ userId, username, email, password: hashpassword });
+  const newUser = new User({ userId, username, hostel,email, password: hashpassword });
 
   await newUser.save();
   return res.status(201).json({ status: true, message: "Record registered" });
@@ -24,7 +24,16 @@ router.post("/signup", async (req, res) => {
 
 // Login Route
 router.post("/login", async (req, res) => {
-  const { userId, password } = req.body; // Get userId and password from the request body
+  const { userId, password, hostel } = req.body; // Get userId and password from the request body
+
+  if (!userId || !password || !hostel) {
+    return res
+      .status(400)
+      .json({
+        status: false,
+        message: "Missing fields. User ID, Password, and Hostel are required.",
+      });
+  }
 
   try {
     // Find the user by userId
@@ -43,6 +52,15 @@ router.post("/login", async (req, res) => {
         .json({ status: false, message: "Password is incorrect" });
     }
 
+   // Optionally validate the hostel (if you want to check if the provided hostel matches the saved hostel)
+   if (hostel && hostel !== user.hostel) {
+    return res.status(400).json({
+      status: false,
+      message: "Hostel does not match the registered hostel",
+    });
+  }
+
+
     // Create a JWT token if login is successful
     const token = jwt.sign({ userId: user.userId }, process.env.KEY, {
       expiresIn: "1h",
@@ -56,6 +74,7 @@ router.post("/login", async (req, res) => {
       status: true,
       message: "Login successfully",
       userId: user.userId,
+      hostel: user.hostel, // Include hostel in the response
     }); // Optionally include userId in response
   } catch (error) {
     console.error("Login error:", error);

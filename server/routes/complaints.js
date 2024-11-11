@@ -8,7 +8,14 @@ const router = express.Router();
 // Fetch all complaints with optional filters for the admin dashboard
 router.get("/all", async (req, res) => {
   const { status, category } = req.query;
-  let filter = {};
+
+  const hostel = req.headers.hostel; //fetch hostel
+
+  if(!hostel){
+    return res.status(400).json({ error: "Hostel not provided" });
+  }
+
+  let filter = {hostel};
 
   if (status) filter.status = status;
   if (category) filter.issueType = category;
@@ -27,18 +34,6 @@ router.get("/all", async (req, res) => {
 router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
   const { status, adminResponse } = req.body;
-
-  // try {
-  //   const updatedComplaint = await Complaint.findByIdAndUpdate(
-  //     id,
-  //     { status, adminResponse, updatedAt: Date.now() },
-  //     { new: true }
-  //   );
-  //   res.status(200).json(updatedComplaint);
-  // } catch (error) {
-  //   console.error("Error updating complaint:", error);
-  //   res.status(500).json({ message: "Error updating complaint" });
-  // }
 
   try{
     const complaint = await Complaint.findById(id);
@@ -76,6 +71,36 @@ router.put("/update/:id", async (req, res) => {
         });
       }
     }
+
+     // Send update email for anonymous complaints (if email is provided)
+     if (complaint.isAnonymous && complaint.email) {
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: complaint.email,
+        subject: `Anonymous Complaint Status updated: ${complaint.issueType}`,
+        text: `Hello,\n\nYour anonymous complaint regarding "${complaint.issueType}" has been updated.\n\nNew status: ${status}\n\nAdmin Response: ${adminResponse}\n\nThank you,\nHostel Management`,
+      };
+
+      try {
+        await transporter.sendMail(mailOptions);
+      } catch (emailError) {
+        console.error("Error sending email:", emailError);
+        return res.status(500).json({
+          message:
+            "Complaint updated, but failed to send status update email for anonymous complaint",
+        });
+      }
+    }
+   
+
     res.status(200).json(updatedComplaint);
   }catch(error)
   {
@@ -135,14 +160,21 @@ router.post("/registercomplaint", async (req, res) => {
       isAnonymous,
       roomNumber,
       email,
+      hostel,//hostel
       userName,
     } = req.body;
+
+    if (!hostel) {
+      return res.status(400).json({ message: "Hostel is required." });
+    }
+   
 
     const complaintData = {
       userId,
       issueType,
       description,
       isAnonymous,
+      hostel, //include hostel
       email, //Add email to the saved data
     };
 
@@ -160,7 +192,7 @@ router.post("/registercomplaint", async (req, res) => {
     await complaint.save();
 
     // Send confirmation email only if the complaint is not anonymous
-    if (!isAnonymous) {
+    if (!isAnonymous && email) {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -183,6 +215,34 @@ router.post("/registercomplaint", async (req, res) => {
         return res.status(500).json({
           message:
             "Complaint registered, but failed to send confirmation email",
+        });
+      }
+    }
+
+    //If complaint is anonymous and email is provided, you may want to send a generic confirmation email.
+    if (isAnonymous && email) {
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: "Complaint Registration Confirmation",
+        text: `Hello,\n\nYour anonymous complaint regarding "${issueType}" has been successfully registered.\n\nDescription: ${description}\n\nOur team will review your complaint and respond accordingly.\n\nThank you,\nHostel Management`,
+      };
+
+      try {
+        await transporter.sendMail(mailOptions);
+      } catch (emailError) {
+        console.error("Error sending email:", emailError);
+        return res.status(500).json({
+          message:
+            "Complaint registered, but failed to send confirmation email for anonymous complaint",
         });
       }
     }

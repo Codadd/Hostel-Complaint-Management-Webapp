@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Axios from "axios";
+import "../Styles/MyComplaint.css";
 
 const MyComplaint = () => {
   const [complaints, setComplaints] = useState([]);

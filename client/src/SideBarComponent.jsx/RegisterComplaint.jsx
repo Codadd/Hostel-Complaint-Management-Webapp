@@ -19,15 +19,21 @@ const RegisterComplaint = () => {
 
     // Retrieve userId from localStorage
     const userId = localStorage.getItem("userId");
+    //hostel
+    const hostel = localStorage.getItem("hostel");
+
+    console.log("User ID:", userId); // Check if this is correct
+    console.log("Hostel ID:", hostel); // Check if this is correct
 
     // Check for userId availability
-    if (!userId) {
+    if (!userId || !hostel ) {
       toast.error("User ID not found. Please log in again.");
       return;
     }
 
     // Prepare complaint data with userId
     const complaintData = {
+      hostel,
       userId,
       issueType,
       description,

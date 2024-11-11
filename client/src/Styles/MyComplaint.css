@@ -4,11 +4,14 @@
   margin: auto;
   font-family: Arial, sans-serif;
 }
+h1{
+  color: beige;
+}
 
 h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: #333;
+  color: #f1e3e3;
 }
 
 .complaints-table {
@@ -16,28 +19,30 @@ h2 {
   border-collapse: collapse;
   margin: 20px 0;
 }
-
 .complaints-table th, .complaints-table td {
   
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dbdbdb;
+
 }
 
 .complaints-table th {
-  background-color: #f2f2f2;
-  color: #333;
+  background-color: #4ecca3;
+  color: #010201ec;
   font-weight: bold;
 }
 
 .complaints-table tr:hover {
-  background-color: #f9f9f9;
+  background-color: #323936;
 }
 
 .complaints-table tr td {
-  color: #000000fe;
+  color: #cde3e0;
 }
-
+.my-complaints h1{
+  color: #f1e9e9;
+}
 .complaints-table td {
   text-align: center;
 }

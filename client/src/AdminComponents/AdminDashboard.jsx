@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import Axios from "axios";
 import "../Styles/AdminDashboard.css";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom"; // Add Link for navigation
+
+
 
 const AdminDashboard = () => {
   const [complaints, setComplaints] = useState([]);
   const [statusFilter, setStatusFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const navigate = useNavigate();
+
+  
 
   // Fetch complaints when the component is loaded
   useEffect(() => {
@@ -17,8 +22,17 @@ const AdminDashboard = () => {
 
   // Fetch complaints based on filters
   const fetchComplaints = async () => {
+
+    const hostel = localStorage.getItem("hostel"); // Get the hostel from localStorage
+
+
     try {
       const response = await Axios.get("http://localhost:8093/complaints/all", {
+        
+        headers: {
+          hostel: hostel, //Send the hostel as a header
+        },
+        
         params: { status: statusFilter, category: categoryFilter },
       });
       setComplaints(response.data);
@@ -30,8 +44,7 @@ const AdminDashboard = () => {
   // Update complaint status and response
   const handleUpdateStatus = async (id, newStatus, responseText) => {
     try {
-      const result = await Axios.put(
-        `http://localhost:8093/complaints/update/${id}`,
+      await Axios.put(`http://localhost:8093/complaints/update/${id}`,
         { status: newStatus, adminResponse: responseText }
       );
       setComplaints((prevComplaints) =>
@@ -49,13 +62,22 @@ const AdminDashboard = () => {
   //Handle Logout
   const handleLogout = () => {
     localStorage.removeItem("adminId");// Use "adminId" instead of "adminToken"
-    sessionStorage.removeItem("adminId");// Also clear from session storage, if used
+    localStorage.removeItem("hostel"); // Remove hostel info on logout
+    
+
+    //sessionStorage.removeItem("adminId");// Also clear from session storage, if used
     navigate("/");// Redirect to main page
   }
 
   return (
     <div className="admin-dashboard">
       <h1>Admin Dashboard - Complaints Management</h1>
+
+      <div className="graph-btn-container">
+      <Link to="/complaints-graph">
+      <button className="btn btn-primary">View Complaints Graph</button>
+      </Link>
+       </div>
 
       {/* Logout Button */}
       <div className="logout-container">
