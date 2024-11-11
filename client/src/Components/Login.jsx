@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css"; // Make sure this file exists
@@ -6,37 +6,32 @@ import "../App.css"; // Make sure this file exists
 const Login = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+
   const [hostel, setHostel] = useState(""); // state for hostel
+
   const navigate = useNavigate();
 
   Axios.defaults.withCredentials = true;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Check if fields are empty and show a popup if necessary
     if (!userId || !password || !hostel) {
       alert("Please fill in all the fields (User ID, Password, Hostel).");
       return; // Prevent form submission if fields are empty
     }
+   
     Axios.post("http://localhost:8093/auth/login", {
       userId,
       password,
-      hostel,
+      hostel//hostel
     })
       .then((response) => {
-        if (response.data && response.data.status) {
-          // Store userId and hostel in localStorage upon successful login
+        if (response.data && /*response.data.userId*/ response.data.status) {
           localStorage.setItem("userId", response.data.userId);
           localStorage.setItem("hostel", response.data.hostel); // Store hostel information
 
-          console.log(
-            "User ID and Hostel saved to local storage:",
-            response.data.userId,
-            response.data.hostel
-          );
-          navigate("/"); // Redirect to home page after successful login
-        } else {
-          console.log("Login failed:", response.data.message);
+          console.log("User ID saved to local storage:", response.data.userId,response.data.hostel);
+          navigate("/");
         }
       })
       .catch((err) => {
@@ -84,7 +79,7 @@ const Login = () => {
         </button>
         <Link to="/forgotPassword">Forgot Password</Link>
         <p>
-          Don't Have an Account? <Link to="/signup">Sign Up</Link>
+          Don&apos;t Have Account? <Link to="/signup">Signup</Link>
         </p>
       </form>
     </div>

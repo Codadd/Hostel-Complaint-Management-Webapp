@@ -1,19 +1,29 @@
 .home-container{
-    display: flex;
-    min-height: 100vh; /* Full screen height */
-    transition: margin 0.3s ease; /* Smooth transition on sidebar toggle */
+  display: flex;
+  min-height: 100vh; /* Full screen height */
+  transition: margin 0.3s ease; /* Smooth transition on sidebar toggle */
 }
 .sidebar {
-    flex: 0 0 auto; /* Sidebar takes minimum space needed */
-  }
-  .main-content {
-    margin-left: 50px;
-    transition: margin-left 0.3s ease;
-    padding: 20px;
-    width: 100%;
-  }
-  
+  flex: 0 0 auto; /* Sidebar takes minimum space needed */
+}
+.main-content {
+  margin-left: 50px;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+  width: 100%;
+}
+
 .home-heading{
+<<<<<<< HEAD
+  position: relative;
+  text-align: center;
+  font-size: 5vw;
+  /* color: linear-gradient(to top, #ffffff 0%, #9491b8c6 100%); */
+  color: azure;
+  margin-top: 1.5em;
+  /* -webkit-text-stroke: 0.3vw rgb(170, 170, 204);
+  text-transform: uppercase; */
+=======
     position: relative;
     text-align: center;
     font-size: 5vw;
@@ -22,38 +32,47 @@
     margin-top: 1.5em;
     /* -webkit-text-stroke: 0.3vw rgb(170, 170, 204);
     text-transform: uppercase; */
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
 }
 
 @keyframes animate
 {
-    0% ,10% ,100%{
-        width: 0;
-    }
-    70%,90%{
-        width: 100%;
-    }
+  0% ,10% ,100%{
+      width: 0;
+  }
+  70%,90%{
+      width: 100%;
+  }
 }
 .para {
+<<<<<<< HEAD
+  margin-top: 1em;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  color: blanchedalmond;
+}
+=======
     margin-top: 1em;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
     color: blanchedalmond;
   }
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 .header {
-    text-align: center;
-  }
+  text-align: center;
+}
 .second-heading{
-    font-size: xx-large;
-    color: rgb(210, 179, 143);
+  font-size: xx-large;
+  color: rgb(210, 179, 143);
 }
 .sidebar-open .main-content {
-    margin-left: 250px; /* Adjust to match sidebar width when open */
-  }
-  
-  .sidebar-closed .main-content {
-    margin-left: 60px; /* Minimal space when sidebar is closed */
-  }
-  .main-content.shifted {
-    margin-left: 250px;
-  }
+  margin-left: 250px; /* Adjust to match sidebar width when open */
+}
+
+.sidebar-closed .main-content {
+  margin-left: 60px; /* Minimal space when sidebar is closed */
+}
+.main-content.shifted {
+  margin-left: 250px;
+}

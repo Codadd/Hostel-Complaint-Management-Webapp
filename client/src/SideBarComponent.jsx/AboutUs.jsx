@@ -27,7 +27,7 @@ const AboutUs = () => {
               <div className="card-body">
                 <h5 className="card-title">Shambhavi Mishra</h5>
                 <p className="info-mation">
-                  Eslectronics and Communication Engineering
+                  Electronics and Communication Engineering
                 </p>
                 <div className="div-icon">
                   <Link to="https://github.com/AS2409">

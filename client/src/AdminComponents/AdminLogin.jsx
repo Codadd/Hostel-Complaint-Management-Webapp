@@ -5,7 +5,9 @@ import "../App.css"; // Ensure your styling file exists
 const AdminLogin = () => {
   const [adminId, setAdminId] = useState("");
   const [password, setPassword] = useState("");
+ 
   const [hostel, setHostel] = useState(""); // New hostel field
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -24,7 +26,9 @@ const AdminLogin = () => {
       password === predefinedAdminCredentials.password
     ) {
       localStorage.setItem("adminId", adminId); // Optionally store admin ID
+
       localStorage.setItem("hostel", hostel); // Store hostel in localStorage
+
       setError(""); // Clear any previous error
       console.log("Admin login successful"); // Success message
       navigate("/admindashboard"); // Redirect to admin dashboard

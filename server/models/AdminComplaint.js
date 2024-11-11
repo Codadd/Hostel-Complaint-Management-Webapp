@@ -3,11 +3,7 @@
 import mongoose from "mongoose";
 
 const complaintSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "RegisterComplaint",
-    required: true,
-  },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "RegisterComplaint", required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
   category: {
@@ -22,6 +18,7 @@ const complaintSchema = new mongoose.Schema({
   },
   adminResponse: { type: String },
   createdAt: { type: Date, default: Date.now },
+
 });
 
 export default mongoose.model("AdminComplaint", complaintSchema);

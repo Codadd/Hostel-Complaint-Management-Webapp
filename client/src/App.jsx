@@ -1,4 +1,4 @@
-import React from "react";
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Signup from "./Components/Signup";
@@ -16,6 +16,8 @@ import MainPage from "./Components/MainPage"; // Import MainPage component
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { UserProvider } from "./context/UserContext";
 import AdminDashboard from "./AdminComponents/AdminDashboard";
+
+import ComplaintsGraph from "./AdminComponents/ComplaintsGraph"; // Import ComplaintsGraph
 
 // ProtectedRoute component for authenticated routes
 const ProtectedRoute = ({ children }) => {
@@ -41,6 +43,8 @@ function App() {
 
           {/* Protected Routes */}
           <Route path="/admindashboard" element={<AdminDashboard />} />
+          <Route path="/complaints-graph" element={<ComplaintsGraph />} />
+          
           <Route
             path="/"
             element={

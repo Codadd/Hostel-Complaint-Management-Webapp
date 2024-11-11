@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css"; // Correct import
@@ -8,7 +8,9 @@ const Signup = () => {
   const [userId, setUserId] = useState(""); // State for user ID
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [hostel, setHostel] = useState(""); // State for hostel
+
   const [popupMessage, setPopupMessage] = useState(""); // State for popup message
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -29,7 +31,7 @@ const Signup = () => {
           setPopupMessage("Signup failed. Please try again.");
         }
       })
-      .catch((err) => {
+      .catch((error) => {
         console.error("Signup error:", error);
         if (error.response && error.response.status === 409) {
           setPopupMessage(
