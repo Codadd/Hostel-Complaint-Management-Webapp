@@ -11,17 +11,20 @@ const AdminDashboard = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const navigate = useNavigate();
+<<<<<<< HEAD
 
   
 
   // Fetch complaints when the component is loaded
+=======
+  const hostel = localStorage.getItem("hostel"); // Get the hostel from localStorage
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
   useEffect(() => {
     fetchComplaints();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter, categoryFilter]);
 
-  // Fetch complaints based on filters
   const fetchComplaints = async () => {
+<<<<<<< HEAD
 
     const hostel = localStorage.getItem("hostel"); // Get the hostel from localStorage
 
@@ -34,6 +37,19 @@ const AdminDashboard = () => {
         },
         
         params: { status: statusFilter, category: categoryFilter },
+=======
+    const hostel = localStorage.getItem("hostel"); // Get the hostel from localStorage
+
+    try {
+      const response = await Axios.get("http://localhost:8093/complaints/all", {
+        headers: {
+          hostel: hostel, // Send the hostel value as a header
+        },
+        params: {
+          status: statusFilter,
+          category: categoryFilter,
+        },
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       });
       setComplaints(response.data);
     } catch (error) {
@@ -41,12 +57,18 @@ const AdminDashboard = () => {
     }
   };
 
-  // Update complaint status and response
   const handleUpdateStatus = async (id, newStatus, responseText) => {
     try {
+<<<<<<< HEAD
       await Axios.put(`http://localhost:8093/complaints/update/${id}`,
         { status: newStatus, adminResponse: responseText }
       );
+=======
+      await Axios.put(`http://localhost:8093/complaints/update/${id}`, {
+        status: newStatus,
+        adminResponse: responseText,
+      });
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       setComplaints((prevComplaints) =>
         prevComplaints.map((complaint) =>
           complaint._id === id
@@ -59,8 +81,8 @@ const AdminDashboard = () => {
     }
   };
 
-  //Handle Logout
   const handleLogout = () => {
+<<<<<<< HEAD
     localStorage.removeItem("adminId");// Use "adminId" instead of "adminToken"
     localStorage.removeItem("hostel"); // Remove hostel info on logout
     
@@ -68,6 +90,12 @@ const AdminDashboard = () => {
     //sessionStorage.removeItem("adminId");// Also clear from session storage, if used
     navigate("/");// Redirect to main page
   }
+=======
+    localStorage.removeItem("adminId");
+    localStorage.removeItem("hostel"); // Remove hostel info on logout
+    navigate("/");
+  };
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
   return (
     <div className="admin-dashboard">
@@ -113,9 +141,7 @@ const AdminDashboard = () => {
           <option value="electricity">Electricity</option>
         </select>
 
-        <button className="apply-filter-btn">
-          Apply Filters
-        </button>
+        <button className="apply-filter-btn">Apply Filters</button>
       </div>
 
       {/* Complaints Table */}
@@ -130,7 +156,7 @@ const AdminDashboard = () => {
               <th>Status</th>
               <th>Response</th>
               <th>Actions</th>
-              <th>Feedback</th>{/*New column for feedback*/}
+              <th>Feedback</th>
             </tr>
           </thead>
           <tbody>
@@ -172,16 +198,16 @@ const AdminDashboard = () => {
                       Mark as Resolved
                     </button>
                   </td>
-                   {/* Display feedback for resolved complaints*/}
-                   <td>
+                  <td>
                     {complaint.status === "resolved"
-                      ? complaint.feedback || "No feedback provided" : "N/A"}
-                   </td>
+                      ? complaint.feedback || "No feedback provided"
+                      : "N/A"}
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7">No complaints found.</td>
+                <td colSpan="8">No complaints found.</td>
               </tr>
             )}
           </tbody>

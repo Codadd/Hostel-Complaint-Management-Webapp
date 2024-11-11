@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 // MainPage.js
 //import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/MainPage.css"; // Optional: Add any custom styles you need
 
+=======
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../Styles/MainPage.css"; // Optional: Add any custom styles you need
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -12,7 +18,7 @@ const MainPage = () => {
   };
 
   const handleAdminLogin = () => {
-    navigate("/adminlogin"); // You can set this to any route you need for admin login
+    navigate("/adminlogin"); // Redirect to the Admin Login page
   };
 
   return (
@@ -38,4 +44,3 @@ const MainPage = () => {
 };
 
 export default MainPage;
-

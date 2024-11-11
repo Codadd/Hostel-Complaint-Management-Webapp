@@ -17,8 +17,8 @@ const RegisterComplaint = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Retrieve userId from localStorage
     const userId = localStorage.getItem("userId");
+<<<<<<< HEAD
     //hostel
     const hostel = localStorage.getItem("hostel");
 
@@ -28,18 +28,27 @@ const RegisterComplaint = () => {
     // Check for userId availability
     if (!userId || !hostel ) {
       toast.error("User ID not found. Please log in again.");
+=======
+    const hostel = localStorage.getItem("hostel");
+
+    console.log("User ID:", userId); // Check if this is correct
+    console.log("Hostel ID:", hostel); // Check if this is correct
+
+    if (!userId || !hostel) {
+      toast.error("Required data missing. Please log in again.");
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       return;
     }
 
-    // Prepare complaint data with userId
+    // Proceed with complaint submission if both userId and hostel are available
     const complaintData = {
       hostel,
       userId,
       issueType,
       description,
       isAnonymous,
-      email, // Include email in the complaint data
-      ...(isAnonymous ? {} : { userName, roomNumber }), // Only include name and room number if not anonymous
+      email,
+      ...(isAnonymous ? {} : { userName, roomNumber }),
     };
 
     try {
@@ -50,11 +59,10 @@ const RegisterComplaint = () => {
 
       if (response.status === 201) {
         toast.success("Complaint submitted successfully!");
-        // Clear the form
         setIssueType("");
         setDescription("");
         setIsAnonymous(false);
-        setEmail(userEmail || ""); // Reset email based on context
+        setEmail(userEmail || "");
         setUserName("");
         setRoomNumber("");
       } else {

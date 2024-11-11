@@ -8,9 +8,13 @@ const Signup = () => {
   const [userId, setUserId] = useState(""); // State for user ID
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+<<<<<<< HEAD
 
   const [hostel, setHostel] = useState(""); // State for hostel
 
+=======
+  const [hostel, setHostel] = useState(""); // State for hostel
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
   const [popupMessage, setPopupMessage] = useState(""); // State for popup message
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -72,7 +76,10 @@ const Signup = () => {
           autoComplete="off"
           onChange={(e) => setPassword(e.target.value)}
         />
+<<<<<<< HEAD
 
+=======
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
         {/* Hostel Dropdown */}
         {/* <label htmlFor="hostel">Select Hostel:</label> */}
         <select
@@ -93,7 +100,10 @@ const Signup = () => {
           <option value="SNGH">SNGH</option>
           <option value="TAGORE">TAGORE</option>
         </select>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
         <button className="my-btn" type="submit">
           Sign Up
         </button>

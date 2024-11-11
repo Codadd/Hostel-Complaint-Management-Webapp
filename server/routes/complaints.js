@@ -2,12 +2,12 @@ import express from "express";
 import nodemailer from "nodemailer";
 import Complaint from "../models/Complaint.js";
 
-
 const router = express.Router();
 
 // Fetch all complaints with optional filters for the admin dashboard
 router.get("/all", async (req, res) => {
   const { status, category } = req.query;
+<<<<<<< HEAD
 
   const hostel = req.headers.hostel; //fetch hostel
 
@@ -16,11 +16,21 @@ router.get("/all", async (req, res) => {
   }
 
   let filter = {hostel};
+=======
+  const hostel = req.headers.hostel; // Fetch the hostel from the request header (sent by frontend)
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
-  if (status) filter.status = status;
-  if (category) filter.issueType = category;
+  if (!hostel) {
+    return res.status(400).json({ error: "Hostel not provided" });
+  }
+
+  let filter = { hostel }; // Filter by the logged-in hostel
+
+  if (status) filter.status = status; // Filter by status if provided
+  if (category) filter.issueType = category; // Filter by issue type if provided
 
   try {
+    // Fetch complaints filtered by hostel and any other optional filters
     const complaints = await Complaint.find(filter);
     res.status(200).json(complaints);
   } catch (error) {
@@ -35,24 +45,31 @@ router.put("/update/:id", async (req, res) => {
   const { id } = req.params;
   const { status, adminResponse } = req.body;
 
+<<<<<<< HEAD
   try{
+=======
+  try {
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     const complaint = await Complaint.findById(id);
 
-    if(!complaint){
-       return res.status(404).json({message: "complaint not found"});
+    if (!complaint) {
+      return res.status(404).json({ message: "Complaint not found" });
     }
+
+    // Update complaint status and admin response
     complaint.status = status;
     complaint.adminResponse = adminResponse;
     complaint.updatedAt = Date.now();
 
     const updatedComplaint = await complaint.save();
 
-    if(!complaint.isAnonymous && complaint.email){
+    // Send update email for non-anonymous complaints
+    if (!complaint.isAnonymous && complaint.email) {
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user:process.env.EMAIL_USER,
-          pass:process.env.EMAIL_PASS,
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
         },
       });
 
@@ -60,20 +77,26 @@ router.put("/update/:id", async (req, res) => {
         from: process.env.EMAIL_USER,
         to: complaint.email,
         subject: `Complaint Status updated: ${complaint.issueType}`,
-        text:`Hello ${complaint.userName},\n\nYour complaint regarding "${complaint.issueType}" has been updated.\n\nNew status: ${status}\n\nAdmin Response: ${adminResponse}\n\nThank you,\nHostel Management`,
+        text: `Hello ${complaint.userName},\n\nYour complaint regarding "${complaint.issueType}" has been updated.\n\nNew status: ${status}\n\nAdmin Response: ${adminResponse}\n\nThank you,\nHostel Management`,
       };
-      try{
+
+      try {
         await transporter.sendMail(mailOptions);
-      }catch(emailError){
-        console.error("Error sending email:",emailError);
+      } catch (emailError) {
+        console.error("Error sending email:", emailError);
         return res.status(500).json({
-          message:"Complaint updated, but failed to send status update email",
+          message: "Complaint updated, but failed to send status update email",
         });
       }
     }
 
+<<<<<<< HEAD
      // Send update email for anonymous complaints (if email is provided)
      if (complaint.isAnonymous && complaint.email) {
+=======
+    // Send update email for anonymous complaints (if email is provided)
+    if (complaint.isAnonymous && complaint.email) {
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -99,12 +122,14 @@ router.put("/update/:id", async (req, res) => {
         });
       }
     }
+<<<<<<< HEAD
    
+=======
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
     res.status(200).json(updatedComplaint);
-  }catch(error)
-  {
-    console.error("Error updating complaint:",error);
+  } catch (error) {
+    console.error("Error updating complaint:", error);
     res.status(500).json({ message: "Error updating complaint" });
   }
 });
@@ -124,7 +149,6 @@ router.get("/mycomplaint", async (req, res) => {
   }
 });
 
-
 // Route to submit feedback for a specific complaint
 router.put("/feedback/:id", async (req, res) => {
   try {
@@ -142,14 +166,15 @@ router.put("/feedback/:id", async (req, res) => {
       return res.status(404).json({ message: "Complaint not found" });
     }
 
-    res.json({ message: "Feedback submitted successfully", complaint: updatedComplaint });
+    res.json({
+      message: "Feedback submitted successfully",
+      complaint: updatedComplaint,
+    });
   } catch (error) {
     console.error("Error submitting feedback:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
-
-
 // POST route to register a complaint
 router.post("/registercomplaint", async (req, res) => {
   try {
@@ -160,22 +185,34 @@ router.post("/registercomplaint", async (req, res) => {
       isAnonymous,
       roomNumber,
       email,
+<<<<<<< HEAD
       hostel,//hostel
+=======
+      hostel, // Ensure hostel is coming from req.body
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       userName,
     } = req.body;
 
     if (!hostel) {
       return res.status(400).json({ message: "Hostel is required." });
     }
+<<<<<<< HEAD
    
+=======
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
 
     const complaintData = {
       userId,
       issueType,
       description,
       isAnonymous,
+<<<<<<< HEAD
       hostel, //include hostel
       email, //Add email to the saved data
+=======
+      hostel, // Include hostel in complaint data
+      email,
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     };
 
     // Include userName and roomNumber only if the complaint is not anonymous
@@ -218,7 +255,17 @@ router.post("/registercomplaint", async (req, res) => {
         });
       }
     }
+    // If complaint is anonymous and email is provided, you may want to send a generic confirmation email.
+    if (isAnonymous && email) {
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
 
+<<<<<<< HEAD
     //If complaint is anonymous and email is provided, you may want to send a generic confirmation email.
     if (isAnonymous && email) {
       const transporter = nodemailer.createTransport({
@@ -229,6 +276,8 @@ router.post("/registercomplaint", async (req, res) => {
         },
       });
 
+=======
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
       const mailOptions = {
         from: process.env.EMAIL_USER,
         to: email,
@@ -246,7 +295,10 @@ router.post("/registercomplaint", async (req, res) => {
         });
       }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 081e16fdf29de05245ed3e461a799663964c5cc8
     res.status(201).json({ message: "Complaint registered successfully" });
   } catch (error) {
     console.error("Error registering complaint:", error);
