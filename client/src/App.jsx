@@ -4,7 +4,6 @@ import Signup from "./Components/Signup";
 import Login from "./Components/Login";
 import AdminLogin from "./AdminComponents/AdminLogin";
 import AdminSignup from "./AdminComponents/AdminSignup";
-import Home from "./Components/Home";
 import ForgotPassword from "./Components/ForgotPassword";
 import ResetPassword from "./Components/ResetPassword";
 import Dashboard from "./Components/Dashboard";
@@ -12,6 +11,7 @@ import AboutUs from "./SideBarComponent.jsx/AboutUs";
 import MyComplaint from "./SideBarComponent.jsx/MyComplaint";
 import RegisterComplaint from "./SideBarComponent.jsx/RegisterComplaint";
 import MainPage from "./Components/MainPage"; // Import MainPage component
+import Home from "./Components/Home";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { UserProvider } from "./context/UserContext";
 import AdminDashboard from "./AdminComponents/AdminDashboard";
@@ -19,6 +19,8 @@ import AdminDashboard from "./AdminComponents/AdminDashboard";
 import ComplaintsGraph from "./AdminComponents/ComplaintsGraph"; // Import ComplaintsGraph
 
 // ProtectedRoute component for authenticated routes
+
+
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = !!localStorage.getItem("userId"); // Check if user is logged in
   return isAuthenticated ? children : <Navigate to="/mainpage" />; // Redirect to MainPage if not authenticated

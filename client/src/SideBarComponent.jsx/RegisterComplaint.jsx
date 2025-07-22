@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import for navigation
 import { UserContext } from "../context/UserContext"; // Adjust path if necessary
 import "../Styles/RegisterComplaint.css";
 import { toast, ToastContainer } from "react-toastify";
@@ -6,31 +7,27 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
 const RegisterComplaint = () => {
-  const { userEmail } = useContext(UserContext); // Assuming UserContext has the user’s email
+  const { userEmail } = useContext(UserContext);
   const [issueType, setIssueType] = useState("");
   const [description, setDescription] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
-  const [email, setEmail] = useState(userEmail || ""); // Pre-fill based on context
+  const [email, setEmail] = useState(userEmail || "");
   const [userName, setUserName] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
+
+  const navigate = useNavigate(); // ✅ Initialize navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const userId = localStorage.getItem("userId");
-    //hostel
     const hostel = localStorage.getItem("hostel");
 
-    console.log("User ID:", userId); // Check if this is correct
-    console.log("Hostel ID:", hostel); // Check if this is correct
-
-    // Check for userId availability
-    if (!userId || !hostel ) {
+    if (!userId || !hostel) {
       toast.error("User ID not found. Please log in again.");
       return;
     }
 
-    // Proceed with complaint submission if both userId and hostel are available
     const complaintData = {
       hostel,
       userId,
@@ -49,12 +46,19 @@ const RegisterComplaint = () => {
 
       if (response.status === 201) {
         toast.success("Complaint submitted successfully!");
+
+        // Reset form fields
         setIssueType("");
         setDescription("");
         setIsAnonymous(false);
         setEmail(userEmail || "");
         setUserName("");
         setRoomNumber("");
+
+        // ✅ Navigate to complaints page after a short delay
+        setTimeout(() => {
+          navigate("/mycomplaint"); // Replace with your actual complaints route
+        }, 1000);
       } else {
         toast.error(`Error: ${response.data.error}`);
       }

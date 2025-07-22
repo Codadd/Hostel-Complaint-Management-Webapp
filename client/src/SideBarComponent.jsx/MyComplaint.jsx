@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import "../Styles/MyComplaint.css";
 const MyComplaint = () => {
   const [complaints, setComplaints] = useState([]);
   const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userId) {
@@ -72,6 +74,9 @@ const MyComplaint = () => {
 
   return (
     <div className="my-complaints">
+      <button className="back-button" onClick={() => navigate("/home")}>
+        ⬅ Back To Home
+      </button>
       <h1>My Complaints</h1>
       <table className="complaints-table">
         <thead>
@@ -99,6 +104,7 @@ const MyComplaint = () => {
                   {complaint.status === "resolved" ? (
                     <div>
                       <textarea
+                        className="feedback-textarea"
                         placeholder="Enter feedback"
                         value={complaint.feedback || ""}
                         onChange={(e) =>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import "../Styles/ComplaintGraph.css";
@@ -6,6 +7,7 @@ import moment from 'moment-timezone';
 
 const MyChartComponent = () => {
   const [complaints, setComplaints] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchComplaints = async () => {
@@ -33,6 +35,9 @@ const MyChartComponent = () => {
 
   return (
     <div className='graph-container'>
+      <button className="back-button" onClick={() => navigate("/admindashboard")}>
+        ⬅ Back
+      </button>
       <h3 style={{ textAlign: 'center', color: '#333' }}>Complaints Over Time</h3>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={formattedData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
