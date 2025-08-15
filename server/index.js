@@ -34,7 +34,7 @@ app.use(cookieParser());
 
 // Connect to the hostelmanagement database
 mongoose
-  .connect("mongodb+srv://shrestha:sh1234@cluster1.vq23j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to hostelmanagement database"))
   .catch((error) => console.error("Database connection error:", error));
 
