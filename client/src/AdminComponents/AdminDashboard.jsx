@@ -17,7 +17,7 @@ const AdminDashboard = () => {
     const hostel = localStorage.getItem("hostel");
 
     try {
-      const response = await Axios.get("http://localhost:8093/complaints/all", {
+      const response = await Axios.get("https://hostel-complaint-management-webapp.onrender.com/complaints/all", {
         headers: {
           hostel: hostel,
         },
@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
   const handleUpdateStatus = async (id, newStatus, responseText) => {
     try {
-      await Axios.put(`http://localhost:8093/complaints/update/${id}`, {
+      await Axios.put(`https://hostel-complaint-management-webapp.onrender.com/complaints/update/${id}`, {
         status: newStatus,
         adminResponse: responseText,
       });

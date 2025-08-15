@@ -26,7 +26,7 @@ const Signup = () => {
       return;
     }
 
-    Axios.post("http://localhost:8093/auth/signup", {
+    Axios.post("https://hostel-complaint-management-webapp.onrender.com/auth/signup", {
       username,
       email,
       password,

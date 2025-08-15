@@ -40,7 +40,7 @@ const RegisterComplaint = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8093/api/registercomplaint",
+        "https://hostel-complaint-management-webapp.onrender.com/api/registercomplaint",
         complaintData
       );
 

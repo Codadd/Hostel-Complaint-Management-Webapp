@@ -19,7 +19,7 @@ const MyComplaint = () => {
   const fetchUserComplaints = async () => {
     try {
       const response = await Axios.get(
-        "http://localhost:8093/api/mycomplaint",
+        "https://hostel-complaint-management-webapp.onrender.com/api/mycomplaint",
         {
           headers: { userid: userId },
         }
@@ -42,7 +42,7 @@ const MyComplaint = () => {
   // Submit feedback
   const handleSubmitFeedback = async (id, feedback) => {
     try {
-      await Axios.put(`http://localhost:8093/complaints/feedback/${id}`, {
+      await Axios.put(`https://hostel-complaint-management-webapp.onrender.com/complaints/feedback/${id}`, {
         feedback: feedback,
       });
       fetchUserComplaints(); // Refresh complaints after feedback submission

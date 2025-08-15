@@ -13,7 +13,7 @@ const MyChartComponent = () => {
     const fetchComplaints = async () => {
       const hostel = localStorage.getItem("hostel");
       try {
-        const response = await Axios.get("http://localhost:8093/complaints/graph-data", {
+        const response = await Axios.get("https://hostel-complaint-management-webapp.onrender.com/complaints/graph-data", {
           headers: { hostel: hostel },
         });
         console.log('Complaints data:', response.data); 
