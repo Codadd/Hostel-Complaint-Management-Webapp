@@ -3,7 +3,7 @@ import "../Styles/AboutUs.css";
 import { Link, useNavigate } from "react-router-dom";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import Face3Icon from "@mui/icons-material/Face3"; // 👩 Icon
+import Face3Icon from "@mui/icons-material/Face3"; 
 
 const AboutUs = () => {
   const navigate = useNavigate();

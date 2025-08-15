@@ -1,5 +1,3 @@
-// server/models/Complaint.js
-import express from "express";
 import mongoose from "mongoose";
 
 const complaintSchema = new mongoose.Schema(
@@ -9,21 +7,18 @@ const complaintSchema = new mongoose.Schema(
     description: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     email: {type: String, required: true},
-    hostel: {type: String, required: true},//hostel
+    hostel: {type: String, required: true},
     isAnonymous: { type: Boolean, default: false },
     status: {
       type: String,
       enum: ["pending", "in-progress", "resolved"],
       default: "pending",
-    }, // Add status field
+    }, 
     adminResponse: { type: String }, // Add adminResponse field for admin's reply
     updatedAt: { type: Date, default: Date.now }, // Automatically set to current date on creation
 
     feedback: {
       type: String,
-      // required: function() {
-      //   return this.status ==="resolved";
-      // }
       default: "",
     },
 
@@ -45,4 +40,4 @@ const complaintSchema = new mongoose.Schema(
 
 const Complaint = mongoose.model("RegisterComplaint", complaintSchema);
 
-export default Complaint; // Ensure this is a default export
+export default Complaint; 

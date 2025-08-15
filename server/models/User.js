@@ -5,8 +5,8 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
-  hostel: { type: String, required: true }, // Add hostel field
-  userId: { type: String, required: true, unique: true }, // Ensure userId is unique
+  hostel: { type: String, required: true }, 
+  userId: { type: String, required: true, unique: true }, 
 });
 
 const UserModel = mongoose.model("Authentication", UserSchema);

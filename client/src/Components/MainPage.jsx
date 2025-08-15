@@ -1,7 +1,5 @@
-// MainPage.js
-//import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../Styles/MainPage.css"; // Optional: Add any custom styles you need
+import "../Styles/MainPage.css"; 
 
 
 const MainPage = () => {

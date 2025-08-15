@@ -6,7 +6,7 @@ import { User } from "../models/User.js";
 
 const router = express.Router();
 
-// ✅ Signup Route
+//  Signup Route
 router.post("/signup", async (req, res) => {
   const { username, email, password, userId, hostel } = req.body;
 
@@ -51,7 +51,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// ✅ Login Route
+//  Login Route
 router.post("/login", async (req, res) => {
   const { userId, password, hostel } = req.body;
 
@@ -96,7 +96,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// ✅ Forgot Password
+//  Forgot Password
 router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
   try {
@@ -130,7 +130,7 @@ router.post("/forgot-password", async (req, res) => {
   }
 });
 
-// ✅ Reset Password
+//  Reset Password
 router.post("/reset-password/:token", async (req, res) => {
   const { token } = req.params;
   const { password } = req.body;
@@ -147,7 +147,7 @@ router.post("/reset-password/:token", async (req, res) => {
   }
 });
 
-// ✅ Middleware: Verify Authenticated User
+
 const verifyUser = async (req, res, next) => {
   try {
     const token = req.cookies.token;
@@ -163,12 +163,12 @@ const verifyUser = async (req, res, next) => {
   }
 };
 
-// ✅ Protected Route
+//  Protected Route
 router.get("/verify", verifyUser, (req, res) => {
   return res.status(200).json({ status: true, message: "Authorized" });
 });
 
-// ✅ Logout Route
+//  Logout Route
 router.get("/logout", (req, res) => {
   res.clearCookie("token");
   return res.json({ status: true, message: "Logged out successfully" });

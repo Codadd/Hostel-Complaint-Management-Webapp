@@ -26,9 +26,7 @@ const MyChartComponent = () => {
   }, []);
 
   const formattedData = complaints.map(item => ({
-    //date: moment(item._id).tz("Asia/Kolkata").format("YYYY-MM-DD"),
-    // date: moment(item.date).format("YYYY-MM-DD"), // Format the date as YYYY-MM-DD
-    // count: item.count,
+    
     date: moment(item._id).tz("Asia/Kolkata").format("YYYY-MM-DD HH:mm"), // Convert UTC date to IST
     count: item.count,
   }));

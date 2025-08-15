@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Import for navigation
-import { UserContext } from "../context/UserContext"; // Adjust path if necessary
+import { useNavigate } from "react-router-dom"; 
+import { UserContext } from "../context/UserContext"; 
 import "../Styles/RegisterComplaint.css";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
@@ -15,7 +15,7 @@ const RegisterComplaint = () => {
   const [userName, setUserName] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
 
-  const navigate = useNavigate(); // ✅ Initialize navigation
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,9 +55,8 @@ const RegisterComplaint = () => {
         setUserName("");
         setRoomNumber("");
 
-        // ✅ Navigate to complaints page after a short delay
         setTimeout(() => {
-          navigate("/mycomplaint"); // Replace with your actual complaints route
+          navigate("/mycomplaint"); 
         }, 1000);
       } else {
         toast.error(`Error: ${response.data.error}`);

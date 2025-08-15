@@ -1,4 +1,3 @@
-// server/index.js
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -47,7 +46,6 @@ app.use("/complaints", complaintRoutes);
 app.use("/api", adminRoutes);
 app.use("/admincomplaint", adminRoutes);
 
-// app.use("/api/complaints", complaintRoutes);
 app.use("/admincomplaint", adminComplaintRoutes); // Admin-specific complaint routes
 app.use("/complaints", graphRoutes);
 

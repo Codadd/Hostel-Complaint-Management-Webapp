@@ -13,30 +13,9 @@ const MyComplaint = () => {
     } else {
       console.error("User not logged in");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
-  // const fetchComplaints = async () => {
-  //   try {
-  //     const response = await Axios.get(
-  //       `http://localhost:8093/api/mycomplaint`,
-  //       {
-  //         headers: { userId },
-  //       }
-  //     );
-  //     console.log("API Response:", response.data); // Log the entire response
-  //     setComplaints(response.data.complaints || []);
-  //   } catch (error) {
-  //     console.error("Error fetching complaints:", error);
-  //     setComplaints([]); // Set to empty array on error
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchComplaints();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
+  
   const fetchUserComplaints = async () => {
     try {
       const response = await Axios.get(

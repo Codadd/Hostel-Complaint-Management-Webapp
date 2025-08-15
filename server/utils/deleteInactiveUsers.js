@@ -16,5 +16,4 @@ async function deleteInactiveUsers() {
   }
 }
 
-// Use default export
 export default deleteInactiveUsers;

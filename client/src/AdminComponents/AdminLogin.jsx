@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../App.css"; // Ensure your styling file exists
+import "../App.css"; 
 
 const AdminLogin = () => {
   const [adminId, setAdminId] = useState("");
@@ -20,7 +20,6 @@ const AdminLogin = () => {
   const handleAdminLogin = (e) => {
     e.preventDefault();
 
-    // Check if entered credentials match predefined ones
     if (
       adminId === predefinedAdminCredentials.adminId &&
       password === predefinedAdminCredentials.password

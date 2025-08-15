@@ -1,4 +1,3 @@
-// routes/complaints.js
 import express from "express";
 import Complaint from "../models/Complaint.js";
 
@@ -25,7 +24,6 @@ router.get("/all", async (req, res) => {
         obj.userId = "Anonymous";
         obj.userName = "Anonymous";
         obj.roomNumber = "Hidden";
-        // obj.email = "Hidden";
       }
 
       return obj;
